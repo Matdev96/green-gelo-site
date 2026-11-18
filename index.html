@@ -22,8 +22,10 @@
     </a>
     <nav class="topo__nav" aria-label="Menu principal">
       <a href="#sabores">Sabores</a>
-      <a href="#quem-somos">Quem somos</a>
-      <a href="#revenda">Seja revendedor</a>
+      <a href="#porque">Por que revender</a>
+      <a href="#fabrica">A fábrica</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#duvidas">Dúvidas</a>
     </nav>
     <a class="botao botao--claro topo__cta" href="#revenda">Quero revender</a>
   </header>
@@ -67,17 +69,147 @@
       </div>
     </section>
 
-    <!-- Os banners de sabor são gerados pelo js/main.js (lista SABORES) e entram aqui,
-         logo antes da seção de revenda -->
+    <!-- Os banners de sabor são gerados pelo js/main.js (lista SABORES)
+         e entram aqui, logo antes de "Por que revender" -->
 
-    <!-- Próximas seções entram aqui (quem somos, revenda, FAQ...) -->
+    <!-- ============ SEÇÃO 3 · POR QUE REVENDER ============ -->
+    <section class="painel porque" id="porque" aria-labelledby="porque-titulo">
+      <div class="porque__conteudo">
+        <header class="porque__topo">
+          <p class="rotulo">Por que revender Green</p>
+          <h2 id="porque-titulo">Um produto que o cliente pede de novo</h2>
+          <p>O gelo saborizado transforma qualquer destilado ou energético em drink. Para o seu ponto, isso significa mais saída, ticket maior e cliente voltando.</p>
+        </header>
+        <ul class="porque__cards">
+          <li class="card">
+            <span class="card__icone icone-fabrica" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 21V10l5 3V10l5 3V6h4l1 15z"></path><path d="M3 21h18"></path><path class="fumaca" d="M15 4c0-1 1-1.5 1-2.5"></path></svg>
+            </span>
+            <h3>Indústria 100% regularizada</h3>
+            <p>Produção própria em São Paulo, com padrão de qualidade e segurança em cada lote.</p>
+          </li>
+          <li class="card">
+            <span class="card__icone icone-caixa" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"></path><path d="M3 8l9 5 9-5"></path><path d="M12 13v8"></path></svg>
+            </span>
+            <h3>Já vem congelado</h3>
+            <p>Agiliza o balcão: sem preparo, sem bagunça. É só servir.</p>
+          </li>
+          <li class="card">
+            <span class="card__icone icone-gota" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>
+            </span>
+            <h3>9 sabores que giram</h3>
+            <p class="card__sabores" id="bolinhas-sabores"></p>
+          </li>
+          <li class="card">
+            <span class="card__icone icone-caminhao" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M2 6h11v10H2z"></path><path d="M13 9h4l3 3v4h-7z"></path><circle cx="6" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
+            </span>
+            <h3>Reposição sem dor de cabeça</h3>
+            <p>Acabou o estoque? É só chamar no WhatsApp e nós levamos até você!</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 4 · FÁBRICA ============ -->
+    <section class="painel fabrica" id="fabrica" aria-labelledby="fabrica-titulo">
+      <div class="fabrica__grade">
+        <div class="fabrica__texto">
+          <p class="rotulo">Fabricação própria</p>
+          <h2 id="fabrica-titulo">Direto da fábrica para o seu ponto</h2>
+          <p class="fabrica__desde"><small>Produzindo desde</small> <span class="contador" data-ate="2019">2019</span></p>
+          <p class="fabrica__desc">A Green produz o próprio gelo em São Paulo. Controlamos da produção à entrega para garantir qualidade e regularidade no seu estoque.</p>
+          <ul class="fabrica__lista">
+            <li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12"></circle><path d="M7 12.5l3.2 3.2L17 9"></path></svg><span>Produção e estoque próprios em São Paulo</span></li>
+            <li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12"></circle><path d="M7 12.5l3.2 3.2L17 9"></path></svg><span>Indústria 100% regularizada</span></li>
+            <li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12"></circle><path d="M7 12.5l3.2 3.2L17 9"></path></svg><span>Condições especiais para revendedores e distribuidores</span></li>
+            <li><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12"></circle><path d="M7 12.5l3.2 3.2L17 9"></path></svg><span>Atendimento comercial pelo WhatsApp</span></li>
+          </ul>
+        </div>
+        <div class="fabrica__fotos">
+          <figure class="foto foto--grande">
+            <img src="assets/img/fotos/fabrica-envase.jpg" alt="Máquina de envase do gelo saborizado na fábrica da Green em São Paulo" width="960" height="1280" loading="lazy">
+          </figure>
+          <figure class="foto foto--pequena">
+            <img src="assets/img/fotos/equipe.jpg" alt="Equipe da Green Gelo Saborizado" width="361" height="640" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 5 · COMO FUNCIONA ============ -->
+    <section class="painel como" id="como-funciona" aria-labelledby="como-titulo">
+      <div class="como__conteudo">
+        <header class="como__topo">
+          <p class="rotulo">Como funciona</p>
+          <h2 id="como-titulo">Do cadastro à reposição em 4 passos</h2>
+          <p>Atendimento direto com a fábrica, sem intermediários.</p>
+        </header>
+        <div class="rota">
+          <div class="rota__trilho" aria-hidden="true">
+            <span class="rota__progresso"></span>
+            <img class="rota__pacote" src="assets/img/produtos/morango.png" alt="" width="286" height="760">
+          </div>
+          <ol class="rota__passos">
+            <li class="passo"><span class="passo__ponto" aria-hidden="true"></span><span class="passo__num">01</span><h3>Cadastre seu ponto</h3><p>Chame a Green no WhatsApp e informe seu estabelecimento e sua cidade.</p></li>
+            <li class="passo"><span class="passo__ponto" aria-hidden="true"></span><span class="passo__num">02</span><h3>Receba a tabela</h3><p>Enviamos pelo WhatsApp a tabela de revenda, o pedido mínimo e o prazo da sua região.</p></li>
+            <li class="passo"><span class="passo__ponto" aria-hidden="true"></span><span class="passo__num">03</span><h3>Faça o pedido</h3><p>Um consultor Green confirma o pedido e combina a entrega com você.</p></li>
+            <li class="passo"><span class="passo__ponto" aria-hidden="true"></span><span class="passo__num">04</span><h3>Reponha fácil</h3><p>Reposição rápida pelo WhatsApp, sem dor de cabeça.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SEÇÃO 6 · CHAMADA FINAL ============ -->
     <section class="painel proxima" id="revenda">
-      <p class="rotulo">Seja revendedor</p>
+      <p class="rotulo">Seja um revendedor</p>
       <h2>Leve a Green para o seu ponto</h2>
-      <a class="botao botao--limao" href="https://wa.me/5511994814543?text=Ol%C3%A1%2C%20Green!%20Vim%20pelo%20site%20e%20quero%20saber%20como%20ser%20revendedor.">Falar no WhatsApp</a>
+      <p class="proxima__texto">Chame a gente no WhatsApp e receba a tabela de revenda, o pedido mínimo e o prazo de entrega da sua região.</p>
+      <div class="proxima__acoes">
+        <a class="botao botao--limao" href="https://wa.me/5511994814543?text=Ol%C3%A1%2C%20Green!%20Vim%20pelo%20site%20e%20quero%20saber%20como%20ser%20revendedor." target="_blank" rel="noopener">Falar no WhatsApp</a>
+        <a class="botao botao--contorno" href="#sabores">Ver os sabores</a>
+      </div>
     </section>
 
   </main>
+
+  <!-- ============ SEÇÃO 7 · DÚVIDAS (rolagem normal) ============ -->
+  <section class="duvidas" id="duvidas" aria-labelledby="duvidas-titulo">
+    <div class="duvidas__conteudo">
+      <header>
+        <p class="rotulo">Dúvidas frequentes</p>
+        <h2 id="duvidas-titulo">Antes de revender</h2>
+      </header>
+      <div class="acordeao" id="acordeao"></div>
+    </div>
+  </section>
+
+  <!-- ============ RODAPÉ ============ -->
+  <footer class="rodape">
+    <div class="rodape__grade">
+      <div class="rodape__marca">
+        <img src="assets/img/logo-green.png" alt="" width="56" height="56">
+        <div>
+          <strong>Green Gelo Saborizado</strong>
+          <p>Indústria de gelo saborizado para drinks em São Paulo desde 2019. Venda exclusiva para revendedores.</p>
+        </div>
+      </div>
+      <nav class="rodape__links" aria-label="Rodapé">
+        <a href="#sabores">Sabores</a>
+        <a href="#porque">Por que revender</a>
+        <a href="#fabrica">A fábrica</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#duvidas">Dúvidas</a>
+      </nav>
+      <div class="rodape__contato">
+        <a href="https://wa.me/5511994814543" target="_blank" rel="noopener">WhatsApp: (11) 99481-4543</a>
+        <a href="https://www.instagram.com/greengelo_br/" target="_blank" rel="noopener">Instagram: @greengelo_br</a>
+      </div>
+    </div>
+    <p class="rodape__legal">Green Gelo Saborizado LTDA · CNPJ 34.041.212/0001-39 · Rua Luis Henrique Pompeu de Camargo, 24 · São Paulo/SP · CEP 04815-350</p>
+  </footer>
 
   <!-- Navegação lateral dos sabores (pontos) -->
   <nav class="sabores__pontos" aria-label="Ir para um sabor" id="pontos"></nav>

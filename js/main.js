@@ -42,7 +42,7 @@ const SABORES = [
 
 /* ---------- Monta os banners a partir da lista ---------- */
 const palco   = document.getElementById('palco');
-const revenda = document.getElementById('revenda');
+const antesDe = document.getElementById('porque');   // banners entram antes desta seção
 const pontos  = document.getElementById('pontos');
 const tpl     = document.getElementById('tpl-sabor');
 
@@ -74,7 +74,7 @@ SABORES.forEach((s, i) => {
   const msg = 'Olá, Green! Vim pelo site e quero o gelo sabor ' + s.nome.toLowerCase() + '.';
   el.querySelector('.banner__botao').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
 
-  palco.insertBefore(el, revenda);   // banners entram antes da seção de revenda
+  palco.insertBefore(el, antesDe);
 
   const p = document.createElement('a');
   p.href = '#' + el.id;
@@ -102,6 +102,42 @@ function marcarSabor(i) {
   pontos.style.color = SABORES[i].texto;
 }
 
+
+/* ---------- Bolinhas dos 9 sabores (card "9 sabores que giram") ---------- */
+const bolinhas = document.getElementById('bolinhas-sabores');
+if (bolinhas) {
+  bolinhas.innerHTML = SABORES.map((s) => '<i aria-hidden="true" style="background:' + s.cor + '" title="' + s.nome + '"></i>').join('') +
+    '<span class="so-leitor">' + SABORES.map((s) => s.nome).join(', ') + '</span>';
+}
+
+/* ---------- Dúvidas frequentes (acordeão) ---------- */
+const DUVIDAS = [
+  { p: 'Qual é o pedido mínimo?', r: 'Varia conforme a região e o tipo de ponto. Você recebe as condições pelo WhatsApp logo após o cadastro.' },
+  { p: 'Vocês entregam na minha cidade?', r: 'A fábrica fica em São Paulo e atendemos todo o Brasil. Informe sua cidade no WhatsApp e confirmamos a entrega e o prazo.' },
+  { p: 'Preciso de freezer?', r: 'Sim. O gelo é um produto que necessita de temperatura controlada e deve ser conservado em freezer.' },
+  { p: 'Posso ser distribuidor?', r: 'Sim, avaliamos parcerias de distribuição. Fale com a gente no WhatsApp e conte sobre a sua operação.' }
+];
+const acordeao = document.getElementById('acordeao');
+if (acordeao) {
+  DUVIDAS.forEach((d, i) => {
+    const item = document.createElement('div');
+    item.className = 'pergunta';
+    item.innerHTML =
+      '<h3 style="margin:0"><button class="pergunta__botao" type="button" aria-expanded="false" aria-controls="resp-' + i + '" id="perg-' + i + '">' +
+      '<span>' + d.p + '</span><span class="pergunta__mais" aria-hidden="true"></span></button></h3>' +
+      '<div class="pergunta__resposta" id="resp-' + i + '" role="region" aria-labelledby="perg-' + i + '"><div><p>' + d.r + '</p></div></div>';
+    acordeao.appendChild(item);
+  });
+  acordeao.addEventListener('click', (e) => {
+    const b = e.target.closest('.pergunta__botao');
+    if (!b) return;
+    const item = b.closest('.pergunta');
+    const abrir = !item.classList.contains('aberta');
+    item.classList.toggle('aberta', abrir);
+    b.setAttribute('aria-expanded', String(abrir));
+  });
+}
+
 /* ---------- Cabeçalho muda ao rolar ---------- */
 const topo = document.getElementById('topo');
 const marcarTopo = () => topo.classList.toggle('rolou', window.scrollY > 40);
@@ -117,6 +153,7 @@ if (window.gsap && window.ScrollTrigger) {
 
   /* ----- Comum: entrada do hero e inclinação com o mouse ----- */
   mm.add('(prefers-reduced-motion: no-preference)', () => {
+    document.documentElement.classList.add('js-anima');
     gsap.timeline({ defaults: { ease: 'power4.out' } })
       .from('.hero__selo', { y: 20, opacity: 0, duration: .8 })
       .from('.hero__titulo .linha > span', { yPercent: 110, duration: 1.1, stagger: .12 }, '-=.5')
@@ -137,6 +174,7 @@ if (window.gsap && window.ScrollTrigger) {
         b.addEventListener('mouseleave', () => { rx(0); ry(0); });
       });
     }
+    return () => document.documentElement.classList.remove('js-anima');
   });
 
   /* ----- COMPUTADOR: palco com transições de sobreposição -----
@@ -164,6 +202,7 @@ if (window.gsap && window.ScrollTrigger) {
 
     const linha = gsap.timeline({ defaults: { ease: 'none' } });
     const inicio = [0];   // tempo em que cada painel termina de entrar
+    const alvo = [0];     // onde os links levam (depois das animações internas)
     let t = 0;
 
     linha.to({}, { duration: H * 0.6 }, 0);   // pausa no hero
@@ -189,8 +228,10 @@ if (window.gsap && window.ScrollTrigger) {
         linha.fromTo(cur, { ...dir.de }, { xPercent: 0, yPercent: 0, duration: T, ease: 'power1.inOut' }, t);
       }
 
-      // animações internas
+      // animações internas de cada tipo de painel
+      let pausa = H;
       if (cur.classList.contains('banner')) {
+        pausa = H * 0.75;   // sabores: pausa um pouco menor
         const lado = cur.classList.contains('banner--invertido') ? 1 : -1;
         const marca = cur.querySelector('.banner__marca-dagua');
         gsap.set(marca, { x: 0, y: 0, yPercent: -50 });
@@ -202,7 +243,7 @@ if (window.gsap && window.ScrollTrigger) {
           y: 40, opacity: 0, duration: T * .5, stagger: .05, ease: 'power2.out' }, t + T * .5);
 
         // enquanto o painel está na tela: embalagem gira em 3D, nome e bolhas deslizam
-        const vida = T + H + T;
+        const vida = T + pausa + T;
         linha.fromTo(cur.querySelector('.banner__pacote'),
           { rotationY: -28 * lado, rotationX: 8, y: 60 },
           { rotationY: 28 * lado, rotationX: -6, y: -60, duration: vida }, t);
@@ -210,6 +251,57 @@ if (window.gsap && window.ScrollTrigger) {
         cur.querySelectorAll('.bolha').forEach((b, k) => {
           linha.fromTo(b, { y: 120 + k * 40 }, { y: -(120 + k * 60), duration: vida }, t);
         });
+
+      } else if (cur.classList.contains('porque')) {
+        // cards "distribuídos" como cartas: saem do centro, girados, e se alinham
+        pausa = H * 1.6;
+        linha.from(cur.querySelectorAll('.porque__topo > *'), {
+          y: 40, opacity: 0, duration: T * .45, stagger: .06, ease: 'power2.out' }, t + T * .35);
+        const rot = [-14, 9, -7, 13];
+        linha.from(cur.querySelectorAll('.card'), {
+          y: () => window.innerHeight * .55, xPercent: (k) => (1.5 - k) * 106,
+          rotation: (k) => rot[k], scale: .85, opacity: 0,
+          duration: .55, stagger: .22, ease: 'power2.out' }, t + T * .55);
+        linha.from(cur.querySelectorAll('.card__icone'), {
+          scale: 0, rotation: -90, duration: .3, stagger: .22, ease: 'back.out(2)' }, t + T * .9);
+        linha.from(cur.querySelectorAll('.card__sabores i'), {
+          scale: 0, duration: .15, stagger: .04, ease: 'back.out(3)' }, t + T * 1.4);
+
+      } else if (cur.classList.contains('fabrica')) {
+        // foto revelada por máscara, contador até 2019 e checks desenhados
+        pausa = H * 1.5;
+        const grande = cur.querySelector('.foto--grande');
+        linha.fromTo(grande, { clipPath: 'inset(100% 0% 0% 0% round 28px)' },
+          { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: T * .7, ease: 'power2.inOut' }, t + T * .3);
+        linha.fromTo(grande.querySelector('img'), { scale: 1.35 }, { scale: 1, duration: T + pausa }, t + T * .3);
+        linha.from(cur.querySelector('.foto--pequena'), {
+          y: 90, rotation: -8, opacity: 0, duration: T * .5, ease: 'power2.out' }, t + T * .8);
+        linha.from(cur.querySelectorAll('.fabrica__texto > *:not(.fabrica__lista)'), {
+          y: 40, opacity: 0, duration: T * .45, stagger: .06, ease: 'power2.out' }, t + T * .4);
+        const cont = cur.querySelector('.contador');
+        linha.fromTo(cont, { textContent: 1990 }, {
+          textContent: Number(cont.dataset.ate || 2019), snap: { textContent: 1 },
+          duration: T * .8, ease: 'power2.out' }, t + T * .6);
+        linha.from(cur.querySelectorAll('.fabrica__lista li'), {
+          x: -30, opacity: 0, duration: T * .35, stagger: .14, ease: 'power2.out' }, t + T * .75);
+        linha.fromTo(cur.querySelectorAll('.check path'), { strokeDashoffset: 16 }, {
+          strokeDashoffset: 0, duration: T * .25, stagger: .14 }, t + T * .9);
+
+      } else if (cur.classList.contains('como')) {
+        // linha da rota desenhada pela rolagem; o pacote anda e acende cada passo
+        pausa = H * 2.6;
+        linha.from(cur.querySelectorAll('.como__topo > *'), {
+          y: 40, opacity: 0, duration: T * .45, stagger: .06, ease: 'power2.out' }, t + T * .35);
+        const passos = cur.querySelectorAll('.passo');
+        linha.from(passos, { y: 30, opacity: 0, duration: T * .4, stagger: .08, ease: 'power2.out' }, t + T * .55);
+        const dur = pausa * .85;
+        const prog = { p: 0 };
+        linha.fromTo(cur.querySelector('.rota__progresso'), { scaleX: 0 }, { scaleX: 1, duration: dur }, t + T);
+        linha.fromTo(cur.querySelector('.rota__pacote'), { left: '0%' }, { left: '100%', duration: dur }, t + T);
+        linha.to(prog, { p: 1, duration: dur, onUpdate: () => {
+          passos.forEach((ps, k) => ps.classList.toggle('ativo', prog.p >= k * .26 - .001 && prog.p > 0));
+        } }, t + T);
+
       } else {
         const filhos = cur.querySelectorAll('.sabores-intro__conteudo > *, .proxima > *:not(.painel__veu)');
         if (filhos.length) {
@@ -222,8 +314,9 @@ if (window.gsap && window.ScrollTrigger) {
 
       t += T;
       inicio[i] = t;
-      linha.to({}, { duration: H }, t);   // pausa para ler
-      t += H;
+      alvo[i] = cur.classList.contains('banner') ? t : t + pausa * .5;
+      linha.to({}, { duration: pausa }, t);   // pausa para ler
+      t += pausa;
     }
 
     const st = ScrollTrigger.create({
@@ -251,8 +344,8 @@ if (window.gsap && window.ScrollTrigger) {
       const idx = paineis.findIndex((p) => '#' + p.id === a.getAttribute('href'));
       if (idx < 0) return;
       e.preventDefault();
-      const alvo = st.start + (inicio[idx] / linha.duration()) * (st.end - st.start);
-      window.scrollTo({ top: Math.ceil(alvo) + 2, behavior: 'smooth' });
+      const y = st.start + (alvo[idx] / linha.duration()) * (st.end - st.start);
+      window.scrollTo({ top: Math.ceil(y) + 2, behavior: 'smooth' });
     };
     document.addEventListener('click', irPara);
 
@@ -293,6 +386,33 @@ if (window.gsap && window.ScrollTrigger) {
       gsap.fromTo(b.querySelector('.banner__pacote'), { rotationY: -24 * lado, y: 40 }, { rotationY: 24 * lado, y: -40, ease: 'none',
         scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: 1 } });
     });
+
+    // Por que revender: cards entram em sequência
+    gsap.from('.porque__topo > *', { y: 30, opacity: 0, duration: .7, stagger: .08, ease: 'power3.out',
+      scrollTrigger: { trigger: '.porque', start: 'top 70%' } });
+    gsap.from('.card', { y: 80, rotation: (k) => [-10, 8, -6, 10][k], opacity: 0, duration: .8, stagger: .12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.porque__cards', start: 'top 85%' } });
+
+    // Fábrica: foto revelada, contador e checks
+    gsap.fromTo('.foto--grande', { clipPath: 'inset(100% 0% 0% 0% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)',
+      duration: 1.1, ease: 'power2.inOut', scrollTrigger: { trigger: '.fabrica__fotos', start: 'top 80%' } });
+    gsap.from('.foto--pequena', { y: 60, rotation: -8, opacity: 0, duration: .8, delay: .4, ease: 'power2.out',
+      scrollTrigger: { trigger: '.fabrica__fotos', start: 'top 80%' } });
+    const cont = document.querySelector('.contador');
+    gsap.fromTo(cont, { textContent: 1990 }, { textContent: Number(cont.dataset.ate || 2019), snap: { textContent: 1 },
+      duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: cont, start: 'top 85%' } });
+    gsap.from('.fabrica__lista li', { x: -24, opacity: 0, duration: .6, stagger: .1, ease: 'power2.out',
+      scrollTrigger: { trigger: '.fabrica__lista', start: 'top 85%' } });
+    gsap.fromTo('.check path', { strokeDashoffset: 16 }, { strokeDashoffset: 0, duration: .4, stagger: .1, delay: .2,
+      scrollTrigger: { trigger: '.fabrica__lista', start: 'top 85%' } });
+
+    // Como funciona: linha vertical desenhada pela rolagem e passos acendendo
+    const passosM = document.querySelectorAll('.passo');
+    gsap.fromTo('.rota__progresso', { scaleY: 0 }, { scaleY: 1, ease: 'none',
+      scrollTrigger: { trigger: '.rota', start: 'top 70%', end: 'bottom 60%', scrub: true,
+        onUpdate: (st) => passosM.forEach((ps, k) => ps.classList.toggle('ativo', st.progress >= k * .3 && st.progress > 0)) } });
+    gsap.fromTo('.rota__pacote', { top: '0%' }, { top: '100%', ease: 'none',
+      scrollTrigger: { trigger: '.rota', start: 'top 70%', end: 'bottom 60%', scrub: true } });
 
     paineis.forEach((p) => {
       const n = Number(p.dataset.sabor);

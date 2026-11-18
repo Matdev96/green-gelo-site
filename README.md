@@ -21,10 +21,14 @@ assets/video/       vídeo do topo (loop sem som) + poster
 ```
 
 Para editar textos, cores ou sabores, altere a lista `SABORES` no início de `js/main.js`.
+As perguntas do FAQ ficam na lista `DUVIDAS`, no mesmo arquivo.
+
+Ordem da página: vídeo → sabores → por que revender → fábrica → como funciona → chamada final → dúvidas → rodapé.
 
 ## Versões
 
-| Tag  | O que tem |
-|------|-----------|
-| v1.0 | Hero com vídeo em tela cheia + banners de sabor animados no scroll |
-| v2.0 | v1 + transições de sobreposição entre seções |
+| Branch | O que tem |
+|--------|-----------|
+| v1 | Hero com vídeo em tela cheia + banners de sabor animados no scroll |
+| v2 | v1 + transições de sobreposição entre seções |
+| v3 | v2 + Por que revender, Fábrica, Como funciona, Dúvidas (rolagem normal) e rodapé |

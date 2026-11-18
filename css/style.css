@@ -118,6 +118,113 @@ h1,h2,h3{margin:0}
 .proxima h2{font-family:var(--fonte-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(40px,6vw,72px);line-height:.95}
 
 
+/* ---------- utilitário ---------- */
+.so-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* títulos de seção (padrão) */
+.porque h2,.fabrica h2,.como h2,.duvidas h2{font-family:var(--fonte-titulo);font-weight:400;text-transform:uppercase;line-height:1.02;font-size:clamp(44px,6vw,88px)}
+.fabrica h2{font-size:clamp(44px,5vw,76px)}
+
+/* ---------- Seção 3 · Por que revender ---------- */
+.porque{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;background:#0E7A38;color:#fff;overflow:hidden}
+.porque::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%, rgba(201,242,122,.18), transparent 40%), radial-gradient(circle at 90% 90%, rgba(0,0,0,.25), transparent 50%);pointer-events:none}
+.porque__conteudo{position:relative;width:min(var(--largura),100% - 32px);margin:0 auto;padding:110px 0 70px}
+.porque__topo{max-width:760px;margin:0 auto 48px;text-align:center}
+.porque__topo .rotulo{color:var(--limao)}
+.porque__topo p:last-child{margin:18px auto 0;max-width:620px;font-size:17px;line-height:1.6;color:rgba(255,255,255,.9)}
+.porque__cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{position:relative;padding:28px 24px;border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(6px);text-align:center;will-change:transform}
+.card h3{font-size:19px;font-weight:700;line-height:1.25;margin:16px 0 8px}
+.card p{margin:0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.88)}
+.card__icone{display:inline-flex;width:64px;height:64px;border-radius:18px;align-items:center;justify-content:center;background:rgba(255,255,255,.14)}
+.card__icone svg{width:32px;height:32px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.card__sabores{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px!important}
+.card__sabores i{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.85);display:block}
+
+/* microanimações dos ícones */
+.fumaca{animation:fumaca 2.4s ease-in-out infinite}
+@keyframes fumaca{0%{transform:translateY(2px);opacity:0}40%{opacity:1}100%{transform:translateY(-4px);opacity:0}}
+.icone-caixa svg{animation:caixa 3s ease-in-out infinite;transform-origin:50% 60%}
+@keyframes caixa{0%,100%{transform:rotate(0)}50%{transform:rotate(-8deg) scale(1.05)}}
+.icone-gota svg{animation:gota 2.2s ease-in infinite}
+@keyframes gota{0%{transform:translateY(-6px);opacity:0}30%{opacity:1}80%{transform:translateY(2px) scaleY(.92)}100%{transform:translateY(2px);opacity:1}}
+.icone-caminhao svg{animation:caminhao 1.2s ease-in-out infinite}
+@keyframes caminhao{0%,100%{transform:translate(0,0)}50%{transform:translate(2px,-1px)}}
+
+/* ---------- Seção 4 · Fábrica ---------- */
+.fabrica{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;background:#FFFFFF;color:var(--tinta);overflow:hidden}
+.fabrica__grade{width:min(var(--largura),100% - 32px);margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center;padding:100px 0 60px}
+.fabrica .rotulo{color:#4A5A47}
+.fabrica__desde{display:flex;align-items:baseline;gap:14px;margin:18px 0 6px}
+.fabrica__desde small{font-size:14px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#4A5A47}
+.contador{font-family:var(--fonte-titulo);font-size:clamp(56px,7vw,96px);line-height:1;color:var(--verde-vivo);font-variant-numeric:tabular-nums}
+.fabrica__desc{margin:0 0 20px;max-width:520px;font-size:17px;line-height:1.6;color:#4A5A47}
+.fabrica__lista{list-style:none;margin:0;padding:0;max-width:540px}
+.fabrica__lista li{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid #E2E8DF;font-size:16px}
+.check{flex:none;width:26px;height:26px}
+.check circle{fill:var(--verde)}
+.check path{fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:16;stroke-dashoffset:0}
+.fabrica__fotos{position:relative;height:min(74vh,640px)}
+.foto{margin:0;position:absolute;overflow:hidden;border-radius:28px;box-shadow:0 30px 60px rgba(6,58,29,.22)}
+.foto img{width:100%;height:100%;object-fit:cover}
+.foto--grande{inset:0 0 0 18%}
+.foto--pequena{left:0;bottom:6%;width:34%;aspect-ratio:9/14;border:6px solid #fff}
+
+/* ---------- Seção 5 · Como funciona ---------- */
+.como{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;background:linear-gradient(160deg,#063A1D 0%,#0B5A2A 100%);color:#fff;overflow:hidden}
+.como__conteudo{width:min(var(--largura),100% - 32px);margin:0 auto;padding:110px 0 70px}
+.como__topo{max-width:980px;margin-bottom:64px}
+.como__topo .rotulo{color:var(--limao)}
+.como__topo p:last-child{margin:16px 0 0;font-size:17px;color:rgba(255,255,255,.85)}
+.rota{position:relative}
+.rota__trilho{position:absolute;left:0;right:0;top:9px;height:4px;border-radius:4px;background:rgba(255,255,255,.18)}
+.rota__progresso{position:absolute;inset:0;border-radius:4px;background:var(--limao);transform-origin:0 50%;transform:scaleX(1)}
+.rota__pacote{position:absolute;top:50%;left:0;width:auto;height:64px;transform:translate(-50%,-50%) rotate(90deg);filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.rota__passos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.passo{position:relative;padding-top:44px}
+.passo__ponto{position:absolute;top:0;left:0;width:22px;height:22px;border-radius:50%;background:#0B5A2A;border:3px solid var(--limao);transition:background-color .3s ease, transform .3s ease}
+.passo.ativo .passo__ponto{background:var(--limao);transform:scale(1.25)}
+.passo > *:not(.passo__ponto){transition:opacity .35s ease}
+.js-anima .passo:not(.ativo) > *:not(.passo__ponto){opacity:.4}
+.passo__num{display:block;font-family:var(--fonte-titulo);font-size:56px;line-height:1;color:var(--limao)}
+.passo h3{font-size:20px;margin:10px 0 8px}
+.passo p{margin:0;font-size:15px;line-height:1.55;color:rgba(255,255,255,.82);max-width:260px}
+
+/* chamada final */
+.proxima__texto{margin:0;max-width:560px;font-size:17px;line-height:1.6;color:rgba(255,255,255,.85)}
+.proxima__acoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+
+/* ---------- Seção 7 · Dúvidas (rolagem normal) ---------- */
+.duvidas{position:relative;z-index:2;background:var(--creme);color:var(--tinta);padding:120px 16px}
+.duvidas__conteudo{max-width:860px;margin:0 auto}
+.duvidas .rotulo{color:#4A5A47}
+.duvidas h2{margin-bottom:36px}
+.acordeao{display:flex;flex-direction:column;gap:12px}
+.pergunta{background:#fff;border:1px solid #DDE7D8;border-radius:18px;overflow:hidden;transition:box-shadow .3s ease, border-color .3s ease}
+.pergunta.aberta{border-color:var(--verde);box-shadow:0 14px 30px rgba(6,58,29,.10)}
+.pergunta__botao{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:64px;padding:18px 24px;background:none;border:0;font:inherit;font-weight:600;font-size:17px;text-align:left;color:inherit;cursor:pointer}
+.pergunta__botao:focus-visible{outline:3px solid var(--verde);outline-offset:-3px;border-radius:18px}
+.pergunta__mais{position:relative;flex:none;width:28px;height:28px;border-radius:50%;background:#E3F3DA;transition:transform .35s ease, background-color .35s ease}
+.pergunta__mais::before,.pergunta__mais::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;margin:-1px 0 0 -6px;background:var(--verde);border-radius:2px}
+.pergunta__mais::after{transform:rotate(90deg)}
+.pergunta.aberta .pergunta__mais{transform:rotate(135deg);background:var(--limao)}
+.pergunta__resposta{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.pergunta.aberta .pergunta__resposta{grid-template-rows:1fr}
+.pergunta__resposta > div{overflow:hidden}
+.pergunta__resposta p{margin:0;padding:0 24px 22px;font-size:16px;line-height:1.6;color:#4A5A47}
+
+/* ---------- Rodapé ---------- */
+.rodape{position:relative;z-index:2;background:#10190F;color:#C8D3C5;padding:56px 16px 28px}
+.rodape__grade{max-width:var(--largura);margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px}
+.rodape__marca{display:flex;gap:16px;max-width:380px}
+.rodape__marca img{width:56px;height:56px;border-radius:50%;flex:none}
+.rodape__marca strong{color:#fff;font-size:18px}
+.rodape__marca p{margin:6px 0 0;font-size:14px;line-height:1.55}
+.rodape__links,.rodape__contato{display:flex;flex-direction:column;gap:4px;font-size:15px}
+.rodape a{text-decoration:none;padding:6px 0}
+.rodape a:hover{color:#fff;text-decoration:underline}
+.rodape__legal{max-width:var(--largura);margin:36px auto 0;padding-top:20px;border-top:1px solid #2A3628;font-size:13px;color:#9FAE9B}
+
 /* ---------- Transições de sobreposição (v2) ----------
    O JS adiciona .palco-ativo no <html> no computador.
    Todas as seções viram "painéis" empilhados numa tela fixa,
@@ -135,6 +242,14 @@ h1,h2,h3{margin:0}
   .banner__fichas{margin-bottom:14px}
   .banner__combina{margin-bottom:18px}
   .banner__img{height:min(62vh,560px)}
+  .porque__conteudo,.como__conteudo{padding:84px 0 36px}
+  .porque h2,.fabrica h2,.como h2{font-size:clamp(40px,5vw,64px)}
+  .porque__topo{margin-bottom:26px}
+  .porque__topo p:last-child{font-size:15px}
+  .como__topo{margin-bottom:36px}
+  .fabrica__grade{padding:84px 0 36px}
+  .fabrica__fotos{height:min(70vh,540px)}
+  .fabrica__lista li{padding:9px 0}
 }
 
 /* ---------- Responsivo ---------- */
@@ -148,6 +263,18 @@ h1,h2,h3{margin:0}
   .banner__fichas{justify-content:center}
   .banner__chao{bottom:-6px}
   .sabores__pontos{display:none}
+  .porque__cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .card{padding:20px 14px}
+  .card h3{font-size:16px}
+  .card p{font-size:14px}
+  .fabrica__grade{grid-template-columns:1fr;padding:90px 0 60px}
+  .fabrica__fotos{height:auto;aspect-ratio:4/5;order:-1}
+  .rota__trilho{left:9px;right:auto;top:0;bottom:0;width:4px;height:auto}
+  .rota__progresso{transform-origin:50% 0}
+  .rota__pacote{left:50%;top:0;height:52px;transform:translate(-50%,-50%) rotate(0deg)}
+  .rota__passos{grid-template-columns:1fr;gap:28px}
+  .passo{padding:0 0 0 44px}
+  .passo__num{font-size:40px}
   .hero__sombra{background:linear-gradient(0deg, rgba(6,58,29,.95) 0%, rgba(6,58,29,.55) 55%, rgba(6,58,29,.35) 100%)}
   .hero__conteudo{align-self:flex-end;padding-bottom:48px}
   .hero__rolar{display:none}
