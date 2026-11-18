@@ -28,10 +28,10 @@
     <a class="botao botao--claro topo__cta" href="#revenda">Quero revender</a>
   </header>
 
-  <main>
+  <main id="palco" class="palco">
 
     <!-- ============ SEÇÃO 1 · HERO COM VÍDEO EM TELA CHEIA ============ -->
-    <section class="hero" id="inicio">
+    <section class="painel hero" id="inicio">
       <video class="hero__video" autoplay muted loop playsinline preload="auto"
              poster="assets/video/hero-poster.jpg" aria-hidden="true">
         <source src="assets/video/hero-loop.mp4" type="video/mp4">
@@ -58,23 +58,20 @@
       </a>
     </section>
 
-    <!-- ============ SEÇÃO 2 · SABORES (BANNERS NO SCROLL) ============ -->
-    <section class="sabores" id="sabores" aria-label="Sabores">
-      <header class="sabores__intro">
+    <!-- ============ SEÇÃO 2 · SABORES ============ -->
+    <section class="painel sabores-intro" id="sabores" aria-label="Sabores">
+      <div class="sabores-intro__conteudo">
         <p class="rotulo">Nossos sabores</p>
         <h2>Escolha o sabor do drink</h2>
         <p>São 9 sabores, cada um com 190 g (200 ml). Role a página e conheça um por um.</p>
-      </header>
-
-      <!-- Navegação lateral (pontos) -->
-      <nav class="sabores__pontos" aria-label="Ir para um sabor" id="pontos"></nav>
-
-      <!-- Os banners são gerados pelo js/main.js a partir da lista SABORES -->
-      <div id="lista-sabores"></div>
+      </div>
     </section>
 
+    <!-- Os banners de sabor são gerados pelo js/main.js (lista SABORES) e entram aqui,
+         logo antes da seção de revenda -->
+
     <!-- Próximas seções entram aqui (quem somos, revenda, FAQ...) -->
-    <section class="proxima" id="revenda">
+    <section class="painel proxima" id="revenda">
       <p class="rotulo">Seja revendedor</p>
       <h2>Leve a Green para o seu ponto</h2>
       <a class="botao botao--limao" href="https://wa.me/5511994814543?text=Ol%C3%A1%2C%20Green!%20Vim%20pelo%20site%20e%20quero%20saber%20como%20ser%20revendedor.">Falar no WhatsApp</a>
@@ -82,8 +79,11 @@
 
   </main>
 
+  <!-- Navegação lateral dos sabores (pontos) -->
+  <nav class="sabores__pontos" aria-label="Ir para um sabor" id="pontos"></nav>
+
   <template id="tpl-sabor">
-    <article class="banner">
+    <article class="painel banner">
       <div class="banner__fundo" aria-hidden="true">
         <span class="banner__marca-dagua"></span>
         <span class="bolha b1"></span><span class="bolha b2"></span><span class="bolha b3"></span>

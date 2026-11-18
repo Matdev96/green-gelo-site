@@ -41,9 +41,10 @@ const SABORES = [
 ];
 
 /* ---------- Monta os banners a partir da lista ---------- */
-const lista  = document.getElementById('lista-sabores');
-const pontos = document.getElementById('pontos');
-const tpl    = document.getElementById('tpl-sabor');
+const palco   = document.getElementById('palco');
+const revenda = document.getElementById('revenda');
+const pontos  = document.getElementById('pontos');
+const tpl     = document.getElementById('tpl-sabor');
 
 SABORES.forEach((s, i) => {
   const el = tpl.content.firstElementChild.cloneNode(true);
@@ -54,6 +55,7 @@ SABORES.forEach((s, i) => {
   el.style.setProperty('--texto', s.texto);
   el.style.setProperty('--texto-suave', s.texto === '#FFFFFF' ? 'rgba(255,255,255,.88)' : 'rgba(0,0,0,.72)');
   el.setAttribute('aria-label', 'Sabor ' + s.nome);
+  el.dataset.sabor = i;
 
   el.querySelector('.banner__marca-dagua').textContent = s.nome;
   const img = el.querySelector('.banner__img');
@@ -72,7 +74,7 @@ SABORES.forEach((s, i) => {
   const msg = 'Olá, Green! Vim pelo site e quero o gelo sabor ' + s.nome.toLowerCase() + '.';
   el.querySelector('.banner__botao').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
 
-  lista.appendChild(el);
+  palco.insertBefore(el, revenda);   // banners entram antes da seção de revenda
 
   const p = document.createElement('a');
   p.href = '#' + el.id;
@@ -81,99 +83,224 @@ SABORES.forEach((s, i) => {
   pontos.appendChild(p);
 });
 
+/* Todos os painéis, na ordem em que aparecem */
+const paineis = Array.from(palco.querySelectorAll(':scope > .painel'));
+paineis.forEach((p, i) => {
+  p.style.zIndex = i + 1;                       // o próximo sempre fica por cima
+  const veu = document.createElement('div');    // escurece o painel quando é coberto
+  veu.className = 'painel__veu';
+  veu.setAttribute('aria-hidden', 'true');
+  p.appendChild(veu);
+});
+const links = Array.from(pontos.querySelectorAll('a'));
+
+function marcarSabor(i) {
+  const ativo = i !== null && i !== undefined;
+  pontos.classList.toggle('visivel', ativo);
+  if (!ativo) return;
+  links.forEach((l, k) => l.classList.toggle('ativo', k === i));
+  pontos.style.color = SABORES[i].texto;
+}
+
 /* ---------- Cabeçalho muda ao rolar ---------- */
 const topo = document.getElementById('topo');
 const marcarTopo = () => topo.classList.toggle('rolou', window.scrollY > 40);
 marcarTopo();
 window.addEventListener('scroll', marcarTopo, { passive: true });
 
-/* ---------- Animações (GSAP) ---------- */
-const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (window.gsap && window.ScrollTrigger && !semMovimento) {
+/* =========================================================
+   ANIMAÇÕES (GSAP)
+   ========================================================= */
+if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
 
-  /* Hero: entrada do título linha por linha */
-  gsap.timeline({ defaults: { ease: 'power4.out' } })
-    .from('.hero__selo', { y: 20, opacity: 0, duration: .8 })
-    .from('.hero__titulo .linha > span', { yPercent: 110, duration: 1.1, stagger: .12 }, '-=.5')
-    .from(['.hero__texto', '.hero__acoes'], { y: 30, opacity: 0, duration: .9, stagger: .12 }, '-=.6')
-    .from('.hero__rolar', { opacity: 0, duration: .8 }, '-=.4');
+  /* ----- Comum: entrada do hero e inclinação com o mouse ----- */
+  mm.add('(prefers-reduced-motion: no-preference)', () => {
+    gsap.timeline({ defaults: { ease: 'power4.out' } })
+      .from('.hero__selo', { y: 20, opacity: 0, duration: .8 })
+      .from('.hero__titulo .linha > span', { yPercent: 110, duration: 1.1, stagger: .12 }, '-=.5')
+      .from(['.hero__texto', '.hero__acoes'], { y: 30, opacity: 0, duration: .9, stagger: .12 }, '-=.6')
+      .from('.hero__rolar', { opacity: 0, duration: .8 }, '-=.4');
 
-  /* Hero: parallax ao rolar */
-  gsap.to('.hero__video',    { yPercent: 18, scale: 1.15, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero__conteudo', { yPercent: -25, opacity: 0, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-  /* Intro dos sabores */
-  gsap.from('.sabores__intro > *', { y: 40, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out',
-    scrollTrigger: { trigger: '.sabores__intro', start: 'top 80%' } });
-
-  /* Cada banner */
-  const banners = gsap.utils.toArray('.banner');
-  const links   = gsap.utils.toArray('#pontos a');
-
-  banners.forEach((b, i) => {
-    const lado    = b.classList.contains('banner--invertido') ? 1 : -1;
-    const palco   = b.querySelector('.banner__palco');
-    const pacote  = b.querySelector('.banner__pacote');
-    const img     = b.querySelector('.banner__img');
-    const info    = b.querySelectorAll('.banner__info > *');
-    const marca   = b.querySelector('.banner__marca-dagua');
-
-    // 1) Entrada: pacote gira e chega de lado, textos sobem em sequência
-    gsap.timeline({ scrollTrigger: { trigger: b, start: 'top 70%', toggleActions: 'play none none reverse' } })
-      .from(palco, { xPercent: 40 * lado, rotationY: 80 * lado, transformPerspective: 1200, scale: .7, opacity: 0, duration: 1.2, ease: 'power3.out' })
-      .from(info,  { y: 40, opacity: 0, duration: .8, stagger: .08, ease: 'power3.out' }, '-=.8');
-
-    // 2) Enquanto rola: o pacote gira em 3D e sobe (scrub)
-    gsap.fromTo(pacote,
-      { rotationY: -28 * lado, rotationX: 8, y: 80 },
-      { rotationY: 28 * lado, rotationX: -6, y: -80, ease: 'none',
-        scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: 1 } });
-
-    // 3) Nome gigante no fundo desliza
-    gsap.set(marca, { x: 0, y: 0, yPercent: -50 });
-    gsap.fromTo(marca, { xPercent: -35 }, { xPercent: -65, ease: 'none',
-      scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: true } });
-
-    // 4) Bolhas em velocidades diferentes (profundidade)
-    b.querySelectorAll('.bolha').forEach((bolha, k) => {
-      gsap.fromTo(bolha, { y: 120 + k * 40 }, { y: -(120 + k * 60), ease: 'none',
-        scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: true } });
-    });
-
-    // 5) Pontos laterais: marca o sabor visível
-    ScrollTrigger.create({
-      trigger: b, start: 'top center', end: 'bottom center',
-      onToggle: (st) => {
-        if (!st.isActive) return;
-        links.forEach((l, k) => l.classList.toggle('ativo', k === i));
-        pontos.style.color = SABORES[i].texto;
-      }
-    });
-
-    // 6) Inclinação 3D com o mouse (só desktop)
     if (window.matchMedia('(hover: hover)').matches) {
-      const rx = gsap.quickTo(img, 'rotationX', { duration: .6, ease: 'power3.out' });
-      const ry = gsap.quickTo(img, 'rotationY', { duration: .6, ease: 'power3.out' });
-      b.addEventListener('mousemove', (e) => {
-        const r = palco.getBoundingClientRect();
-        const px = (e.clientX - (r.left + r.width / 2)) / r.width;
-        const py = (e.clientY - (r.top + r.height / 2)) / r.height;
-        ry(px * 30); rx(-py * 20);
+      document.querySelectorAll('.banner').forEach((b) => {
+        const img = b.querySelector('.banner__img');
+        const area = b.querySelector('.banner__palco');
+        const rx = gsap.quickTo(img, 'rotationX', { duration: .6, ease: 'power3.out' });
+        const ry = gsap.quickTo(img, 'rotationY', { duration: .6, ease: 'power3.out' });
+        b.addEventListener('mousemove', (e) => {
+          const r = area.getBoundingClientRect();
+          ry(((e.clientX - (r.left + r.width / 2)) / r.width) * 30);
+          rx(-((e.clientY - (r.top + r.height / 2)) / r.height) * 20);
+        });
+        b.addEventListener('mouseleave', () => { rx(0); ry(0); });
       });
-      b.addEventListener('mouseleave', () => { rx(0); ry(0); });
     }
   });
 
-  /* Pontos aparecem só durante os banners */
-  ScrollTrigger.create({
-    trigger: '#lista-sabores', start: 'top center', end: 'bottom center',
-    onToggle: (st) => pontos.classList.toggle('visivel', st.isActive)
+  /* ----- COMPUTADOR: palco com transições de sobreposição -----
+     Cada seção entra por cima da anterior, alternando a direção. */
+  mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
+    document.documentElement.classList.add('palco-ativo');
+
+    // Direção de entrada de cada painel (repete em ciclo)
+    //  cima     = sobe de baixo para cima
+    //  esquerda = vem da direita para a esquerda
+    //  direita  = vem da esquerda para a direita
+    //  baixo    = desce de cima para baixo
+    //  circulo  = abre em círculo a partir do centro
+    const DIRECOES = ['cima', 'esquerda', 'direita', 'baixo', 'circulo'];
+    const ENTRADA = {
+      cima:     { de: { yPercent: 100 },  saida: { yPercent: -14 } },
+      esquerda: { de: { xPercent: 100 },  saida: { xPercent: -14 } },
+      direita:  { de: { xPercent: -100 }, saida: { xPercent: 14 } },
+      baixo:    { de: { yPercent: -100 }, saida: { yPercent: 14 } },
+      circulo:  { de: { clipPath: 'circle(0% at 50% 50%)' }, saida: {} }
+    };
+
+    const T = 1;     // duração da transição (em "telas" de rolagem)
+    const H = 0.8;   // pausa em cada painel para ler
+
+    const linha = gsap.timeline({ defaults: { ease: 'none' } });
+    const inicio = [0];   // tempo em que cada painel termina de entrar
+    let t = 0;
+
+    linha.to({}, { duration: H * 0.6 }, 0);   // pausa no hero
+    t = H * 0.6;
+
+    for (let i = 1; i < paineis.length; i++) {
+      const ant = paineis[i - 1];
+      const cur = paineis[i];
+      const dir = ENTRADA[DIRECOES[(i - 1) % DIRECOES.length]];
+
+      // painel anterior: recua, encolhe e escurece
+      linha.to(ant, { scale: .9, ...dir.saida, duration: T }, t);
+      linha.to(ant.querySelector('.painel__veu'), { opacity: .6, duration: T }, t);
+      if (ant.classList.contains('hero')) {
+        linha.to('.hero__conteudo', { y: -80, opacity: 0, duration: T * .6 }, t);
+      }
+
+      // painel novo: entra por cima
+      if (dir.de.clipPath) {
+        linha.fromTo(cur, { clipPath: 'circle(0% at 50% 50%)' },
+                          { clipPath: 'circle(75% at 50% 50%)', duration: T, ease: 'power1.inOut' }, t);
+      } else {
+        linha.fromTo(cur, { ...dir.de }, { xPercent: 0, yPercent: 0, duration: T, ease: 'power1.inOut' }, t);
+      }
+
+      // animações internas
+      if (cur.classList.contains('banner')) {
+        const lado = cur.classList.contains('banner--invertido') ? 1 : -1;
+        const marca = cur.querySelector('.banner__marca-dagua');
+        gsap.set(marca, { x: 0, y: 0, yPercent: -50 });
+
+        linha.from(cur.querySelector('.banner__palco'), {
+          xPercent: 40 * lado, rotationY: 80 * lado, transformPerspective: 1200,
+          scale: .7, opacity: 0, duration: T * .7, ease: 'power2.out' }, t + T * .35);
+        linha.from(cur.querySelectorAll('.banner__info > *'), {
+          y: 40, opacity: 0, duration: T * .5, stagger: .05, ease: 'power2.out' }, t + T * .5);
+
+        // enquanto o painel está na tela: embalagem gira em 3D, nome e bolhas deslizam
+        const vida = T + H + T;
+        linha.fromTo(cur.querySelector('.banner__pacote'),
+          { rotationY: -28 * lado, rotationX: 8, y: 60 },
+          { rotationY: 28 * lado, rotationX: -6, y: -60, duration: vida }, t);
+        linha.fromTo(marca, { xPercent: -35 }, { xPercent: -65, duration: vida }, t);
+        cur.querySelectorAll('.bolha').forEach((b, k) => {
+          linha.fromTo(b, { y: 120 + k * 40 }, { y: -(120 + k * 60), duration: vida }, t);
+        });
+      } else {
+        const filhos = cur.querySelectorAll('.sabores-intro__conteudo > *, .proxima > *:not(.painel__veu)');
+        if (filhos.length) {
+          linha.from(filhos, { y: 60, opacity: 0, duration: T * .5, stagger: .08, ease: 'power2.out' }, t + T * .45);
+        }
+      }
+
+      // painel de duas telas atrás some (deixa a pilha limpa)
+      if (i >= 2) linha.set(paineis[i - 2], { autoAlpha: 0 }, t + T);
+
+      t += T;
+      inicio[i] = t;
+      linha.to({}, { duration: H }, t);   // pausa para ler
+      t += H;
+    }
+
+    const st = ScrollTrigger.create({
+      animation: linha,
+      trigger: palco,
+      start: 'top top',
+      end: () => '+=' + Math.round(linha.duration() * window.innerHeight * 0.9),
+      pin: true,
+      scrub: 0.8,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: () => {
+        const tempo = linha.time();
+        let atual = 0;
+        for (let i = 0; i < inicio.length; i++) if (tempo >= inicio[i] - T * .5) atual = i;
+        const sabor = paineis[atual].dataset.sabor;
+        marcarSabor(sabor !== undefined ? Number(sabor) : null);
+      }
+    });
+
+    // Links internos (#sabores, #revenda, pontos...) levam ao painel certo
+    const irPara = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const idx = paineis.findIndex((p) => '#' + p.id === a.getAttribute('href'));
+      if (idx < 0) return;
+      e.preventDefault();
+      const alvo = st.start + (inicio[idx] / linha.duration()) * (st.end - st.start);
+      window.scrollTo({ top: Math.ceil(alvo) + 2, behavior: 'smooth' });
+    };
+    document.addEventListener('click', irPara);
+
+    return () => {
+      document.documentElement.classList.remove('palco-ativo');
+      document.removeEventListener('click', irPara);
+      marcarSabor(null);
+    };
   });
 
-  /* Recalcula quando as imagens carregarem */
+  /* ----- CELULAR: cada seção sobe por cima da anterior ----- */
+  mm.add('(max-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+    gsap.to('.hero__conteudo', { yPercent: -25, opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+    paineis.forEach((p, i) => {
+      if (i === paineis.length - 1) return;
+      // fixa o painel quando o fim dele chega ao fim da tela; o próximo sobe por cima
+      ScrollTrigger.create({
+        trigger: p,
+        start: () => (p.offsetHeight <= window.innerHeight ? 'top top' : 'bottom bottom'),
+        end: () => '+=' + window.innerHeight,
+        pin: true,
+        pinSpacing: false,
+        invalidateOnRefresh: true
+      });
+      gsap.to(p.querySelector('.painel__veu'), { opacity: .55, ease: 'none',
+        scrollTrigger: { trigger: paineis[i + 1], start: 'top bottom', end: 'top top', scrub: true } });
+    });
+
+    paineis.forEach((b) => {
+      if (!b.classList.contains('banner')) return;
+      const lado = b.classList.contains('banner--invertido') ? 1 : -1;
+      gsap.timeline({ scrollTrigger: { trigger: b, start: 'top 70%', toggleActions: 'play none none reverse' } })
+        .from(b.querySelector('.banner__palco'), { xPercent: 30 * lado, rotationY: 70 * lado, transformPerspective: 1200,
+          scale: .75, opacity: 0, duration: 1.1, ease: 'power3.out' })
+        .from(b.querySelectorAll('.banner__info > *'), { y: 30, opacity: 0, duration: .7, stagger: .07, ease: 'power3.out' }, '-=.7');
+      gsap.fromTo(b.querySelector('.banner__pacote'), { rotationY: -24 * lado, y: 40 }, { rotationY: 24 * lado, y: -40, ease: 'none',
+        scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: 1 } });
+    });
+
+    paineis.forEach((p) => {
+      const n = Number(p.dataset.sabor);
+      if (Number.isNaN(n)) return;
+      ScrollTrigger.create({ trigger: p, start: 'top center', end: 'bottom center',
+        onToggle: (s) => s.isActive && marcarSabor(n) });
+    });
+  });
+
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
