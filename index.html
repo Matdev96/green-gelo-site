@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Green Gelo Saborizado | Gelo para drink para revendedores</title>
+  <meta name="description" content="Indústria de gelo saborizado em São Paulo desde 2019. 9 sabores, já vem congelado e reposição rápida. Seja um revendedor Green.">
+  <meta name="theme-color" content="#063A1D">
+  <link rel="icon" href="assets/img/logo-green.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ CABEÇALHO ============ -->
+  <header class="topo" id="topo">
+    <a class="topo__marca" href="#inicio" aria-label="Green Gelo Saborizado — início">
+      <img src="assets/img/logo-green.png" alt="" width="48" height="48">
+      <span>Green Gelo<br><small>Saborizado</small></span>
+    </a>
+    <nav class="topo__nav" aria-label="Menu principal">
+      <a href="#sabores">Sabores</a>
+      <a href="#quem-somos">Quem somos</a>
+      <a href="#revenda">Seja revendedor</a>
+    </nav>
+    <a class="botao botao--claro topo__cta" href="#revenda">Quero revender</a>
+  </header>
+
+  <main>
+
+    <!-- ============ SEÇÃO 1 · HERO COM VÍDEO EM TELA CHEIA ============ -->
+    <section class="hero" id="inicio">
+      <video class="hero__video" autoplay muted loop playsinline preload="auto"
+             poster="assets/video/hero-poster.jpg" aria-hidden="true">
+        <source src="assets/video/hero-loop.mp4" type="video/mp4">
+      </video>
+      <div class="hero__sombra" aria-hidden="true"></div>
+
+      <div class="hero__conteudo">
+        <p class="hero__selo">Indústria de gelo saborizado · Desde 2019</p>
+        <h1 class="hero__titulo">
+          <span class="linha"><span>Leve muito mais</span></span>
+          <span class="linha"><span>sabor para o</span></span>
+          <span class="linha"><span class="destaque">seu drink</span></span>
+        </h1>
+        <p class="hero__texto">Gelo saborizado que já chega congelado, abre fácil e gira rápido no balcão. Atendemos todo o Brasil.</p>
+        <div class="hero__acoes">
+          <a class="botao botao--limao" href="#revenda">Quero ser revendedor</a>
+          <a class="botao botao--contorno" href="#sabores">Ver os 9 sabores</a>
+        </div>
+      </div>
+
+      <a class="hero__rolar" href="#sabores" aria-label="Rolar para os sabores">
+        <span>Role para ver os sabores</span>
+        <i aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <!-- ============ SEÇÃO 2 · SABORES (BANNERS NO SCROLL) ============ -->
+    <section class="sabores" id="sabores" aria-label="Sabores">
+      <header class="sabores__intro">
+        <p class="rotulo">Nossos sabores</p>
+        <h2>Escolha o sabor do drink</h2>
+        <p>São 9 sabores, cada um com 190 g (200 ml). Role a página e conheça um por um.</p>
+      </header>
+
+      <!-- Navegação lateral (pontos) -->
+      <nav class="sabores__pontos" aria-label="Ir para um sabor" id="pontos"></nav>
+
+      <!-- Os banners são gerados pelo js/main.js a partir da lista SABORES -->
+      <div id="lista-sabores"></div>
+    </section>
+
+    <!-- Próximas seções entram aqui (quem somos, revenda, FAQ...) -->
+    <section class="proxima" id="revenda">
+      <p class="rotulo">Seja revendedor</p>
+      <h2>Leve a Green para o seu ponto</h2>
+      <a class="botao botao--limao" href="https://wa.me/5511994814543?text=Ol%C3%A1%2C%20Green!%20Vim%20pelo%20site%20e%20quero%20saber%20como%20ser%20revendedor.">Falar no WhatsApp</a>
+    </section>
+
+  </main>
+
+  <template id="tpl-sabor">
+    <article class="banner">
+      <div class="banner__fundo" aria-hidden="true">
+        <span class="banner__marca-dagua"></span>
+        <span class="bolha b1"></span><span class="bolha b2"></span><span class="bolha b3"></span>
+        <span class="bolha b4"></span><span class="bolha b5"></span>
+      </div>
+      <div class="banner__grade">
+        <div class="banner__palco">
+          <div class="banner__pacote">
+            <div class="banner__flutua">
+              <img class="banner__img" alt="" width="286" height="760" loading="lazy">
+            </div>
+          </div>
+          <span class="banner__chao" aria-hidden="true"></span>
+        </div>
+        <div class="banner__info">
+          <p class="banner__contador"></p>
+          <p class="banner__pre"></p>
+          <h3 class="banner__nome"></h3>
+          <p class="banner__desc"></p>
+          <ul class="banner__fichas"></ul>
+          <p class="banner__combina"></p>
+          <a class="botao banner__botao" target="_blank" rel="noopener">Pedir agora</a>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

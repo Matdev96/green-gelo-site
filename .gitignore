@@ -1,0 +1,10 @@
+# arquivos temporários / de trabalho
+*.tar
+*.zip
+assets/video/*.webm
+assets/video/_*
+green-hero.mp4
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
