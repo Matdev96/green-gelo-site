@@ -32,3 +32,14 @@ Ordem da página: vídeo → sabores → por que revender → fábrica → como 
 | v1 | Hero com vídeo em tela cheia + banners de sabor animados no scroll |
 | v2 | v1 + transições de sobreposição entre seções |
 | v3 | v2 + Por que revender, Fábrica, Como funciona, Dúvidas (rolagem normal) e rodapé |
+| v4 | v3 + desempenho: WebP, fontes no site, vídeo leve no celular, GSAP só no computador |
+
+## Desempenho
+
+- Imagens em **WebP** (`assets/img/**/*.webp`). Os PNG/JPG originais ficam no repositório só como fonte.
+- Fontes hospedadas em `assets/fonts/` (sem Google Fonts).
+- O vídeo do topo carrega depois da página; no celular usa `hero-loop-mobile.mp4` (360p).
+- **Computador:** GSAP + ScrollTrigger são baixados e a tela fixa é montada no primeiro movimento do usuário.
+- **Celular:** nenhuma biblioteca; seções com `position: sticky`, entradas com CSS e `IntersectionObserver`,
+  e giro da embalagem / linha da rota com CSS *scroll-driven animations* (onde houver suporte).
+- Imagens dos painéis usam `data-src` e são carregadas perto da hora de aparecer.

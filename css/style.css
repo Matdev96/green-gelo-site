@@ -3,6 +3,16 @@
    Fontes: Anton (títulos) + Poppins (texto)
    ========================================================= */
 
+/* ---------- Fontes (hospedadas no site) ---------- */
+@font-face{font-family:"Anton";src:url("../assets/fonts/anton-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../assets/fonts/poppins-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../assets/fonts/poppins-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../assets/fonts/poppins-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Poppins";src:url("../assets/fonts/poppins-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+/* fontes de reserva com medidas parecidas (evita o texto "pular" quando a fonte carrega) */
+@font-face{font-family:"Anton Reserva";src:local("Impact"),local("Arial Narrow Bold"),local("Arial");size-adjust:96%;ascent-override:118%;descent-override:33%}
+@font-face{font-family:"Poppins Reserva";src:local("Arial");size-adjust:112%;ascent-override:94%;descent-override:31%;line-gap-override:9%}
+
 :root{
   --verde-noite:#063A1D;
   --verde:#0B6B33;
@@ -12,8 +22,8 @@
   --tinta:#10190F;
   --raio:999px;
   --largura:1200px;
-  --fonte-titulo:"Anton", "Impact", sans-serif;
-  --fonte-texto:"Poppins", system-ui, sans-serif;
+  --fonte-titulo:"Anton", "Anton Reserva", "Impact", sans-serif;
+  --fonte-texto:"Poppins", "Poppins Reserva", system-ui, sans-serif;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -54,7 +64,14 @@ h1,h2,h3{margin:0}
 .hero__selo{display:inline-block;margin:0 0 24px;padding:8px 16px;border-radius:var(--raio);background:rgba(255,255,255,.12);backdrop-filter:blur(6px);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 .hero__titulo{font-family:var(--fonte-titulo);font-weight:400;text-transform:uppercase;font-size:clamp(52px,9vw,128px);line-height:.92;letter-spacing:.01em;max-width:11ch}
 .hero__titulo .linha{display:block;overflow:hidden;padding-bottom:.04em}
-.hero__titulo .linha > span{display:inline-block}
+.hero__titulo .linha > span{display:inline-block;animation:linha-sobe .9s cubic-bezier(.2,.8,.2,1) both}
+.hero__titulo .linha:nth-child(2) > span{animation-delay:.08s}
+.hero__titulo .linha:nth-child(3) > span{animation-delay:.16s}
+.hero__selo,.hero__acoes,.hero__rolar{animation:aparece .7s ease-out both}
+.hero__acoes{animation-delay:.25s}
+.hero__rolar{animation-delay:.5s}
+@keyframes linha-sobe{from{transform:translateY(38%)}to{transform:none}}
+@keyframes aparece{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hero__titulo .destaque{color:var(--limao)}
 .hero__texto{max-width:480px;margin:24px 0 32px;font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:rgba(255,255,255,.88)}
 .hero__acoes{display:flex;flex-wrap:wrap;gap:12px}
@@ -252,6 +269,49 @@ h1,h2,h3{margin:0}
   .fabrica__lista li{padding:9px 0}
 }
 
+
+/* ---------- Celular: animações só com CSS (sem biblioteca) ----------
+   O JS adiciona .modo-mob no <html>. Cada seção fica "grudada" (sticky)
+   e a próxima sobe por cima; as entradas usam transições ativadas
+   quando a seção aparece (.em-cena). */
+.modo-mob .painel{position:sticky;top:var(--gruda,0px)}
+.modo-mob .painel:not(.hero){box-shadow:0 -24px 40px rgba(0,0,0,.22)}
+.modo-mob .banner__palco{opacity:0;transform:perspective(1200px) translateX(calc(30% * var(--lado,-1))) rotateY(calc(70deg * var(--lado,-1))) scale(.75);transition:opacity 1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.modo-mob .banner__info > *,.modo-mob .porque__topo > *,.modo-mob .sabores-intro__conteudo > *,.modo-mob .fabrica__texto > *,.modo-mob .como__topo > *,.modo-mob .proxima > *:not(.painel__veu){opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1)}
+.modo-mob .card{opacity:0;transform:translateY(70px) rotate(var(--giro,0deg));transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1)}
+.modo-mob .card:nth-child(1){--giro:-10deg}.modo-mob .card:nth-child(2){--giro:8deg;transition-delay:.12s}
+.modo-mob .card:nth-child(3){--giro:-6deg;transition-delay:.24s}.modo-mob .card:nth-child(4){--giro:10deg;transition-delay:.36s}
+.modo-mob .foto--grande{clip-path:inset(100% 0 0 0 round 28px);transition:clip-path 1.1s cubic-bezier(.65,0,.35,1)}
+.modo-mob .foto--pequena{opacity:0;transform:translateY(60px) rotate(-8deg);transition:opacity .8s ease .4s, transform .8s cubic-bezier(.2,.7,.2,1) .4s}
+.modo-mob .fabrica__lista li{opacity:0;transform:translateX(-24px);transition:opacity .6s ease, transform .6s ease}
+.modo-mob .check path{stroke-dashoffset:16;transition:stroke-dashoffset .5s ease .3s}
+.modo-mob .em-cena .banner__palco,.modo-mob .em-cena .banner__info > *,.modo-mob .em-cena .porque__topo > *,.modo-mob .em-cena.card,.modo-mob .em-cena .card,
+.modo-mob .em-cena .sabores-intro__conteudo > *,.modo-mob .em-cena .fabrica__texto > *,.modo-mob .em-cena .como__topo > *,.modo-mob .em-cena.proxima > *,
+.modo-mob .em-cena .foto--pequena,.modo-mob .em-cena .fabrica__lista li{opacity:1;transform:none}
+.modo-mob .em-cena .foto--grande{clip-path:inset(0 0 0 0 round 28px)}
+.modo-mob .em-cena .check path{stroke-dashoffset:0}
+/* atrasos em sequência */
+.modo-mob .banner__info > :nth-child(2),.modo-mob .fabrica__texto > :nth-child(2),.modo-mob .porque__topo > :nth-child(2),.modo-mob .como__topo > :nth-child(2),.modo-mob .proxima > :nth-child(2),.modo-mob .sabores-intro__conteudo > :nth-child(2){transition-delay:.08s}
+.modo-mob .banner__info > :nth-child(3),.modo-mob .fabrica__texto > :nth-child(3),.modo-mob .porque__topo > :nth-child(3),.modo-mob .como__topo > :nth-child(3),.modo-mob .proxima > :nth-child(3),.modo-mob .sabores-intro__conteudo > :nth-child(3){transition-delay:.16s}
+.modo-mob .banner__info > :nth-child(4),.modo-mob .fabrica__texto > :nth-child(4),.modo-mob .proxima > :nth-child(4){transition-delay:.24s}
+.modo-mob .banner__info > :nth-child(5),.modo-mob .fabrica__texto > :nth-child(5){transition-delay:.32s}
+.modo-mob .banner__info > :nth-child(6){transition-delay:.4s}
+.modo-mob .banner__info > :nth-child(7){transition-delay:.48s}
+.modo-mob .fabrica__lista li:nth-child(2),.modo-mob .fabrica__lista li:nth-child(2) .check path{transition-delay:.1s}
+.modo-mob .fabrica__lista li:nth-child(3),.modo-mob .fabrica__lista li:nth-child(3) .check path{transition-delay:.2s}
+.modo-mob .fabrica__lista li:nth-child(4),.modo-mob .fabrica__lista li:nth-child(4) .check path{transition-delay:.3s}
+
+/* giro da embalagem e linha da rota acompanhando a rolagem (navegadores com suporte) */
+@supports (animation-timeline: view()){
+  .modo-mob .banner__pacote{animation:pacote-gira linear both;animation-timeline:view();animation-range:entry 10% exit 60%}
+  @keyframes pacote-gira{from{transform:rotateY(-24deg) translateY(40px)}to{transform:rotateY(24deg) translateY(-40px)}}
+  .modo-mob .rota{view-timeline-name:--rota}
+  .modo-mob .rota__progresso{animation:rota-desenha linear both;animation-timeline:--rota;animation-range:entry 60% exit 20%}
+  .modo-mob .rota__pacote{animation:rota-anda linear both;animation-timeline:--rota;animation-range:entry 60% exit 20%}
+  @keyframes rota-desenha{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes rota-anda{from{top:0%}to{top:100%}}
+}
+
 /* ---------- Responsivo ---------- */
 @media (max-width: 900px){
   .topo__nav{display:none}
@@ -289,6 +349,7 @@ h1,h2,h3{margin:0}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .hero__video{display:none}
-  .hero{background:url("../assets/video/hero-poster.jpg") center/cover}
+  .hero{background:url("../assets/video/hero-poster.webp") center/cover}
+  .hero__titulo .linha > span,.hero__selo,.hero__acoes,.hero__rolar{animation:none}
   .banner__flutua,.banner__chao,.hero__rolar i::after{animation:none}
 }

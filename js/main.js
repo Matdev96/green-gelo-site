@@ -11,31 +11,31 @@ const WHATSAPP = '5511994814543';
    texto      = cor do texto (escolhida para dar contraste)
    descricao / combina = textos de exemplo: confirmar com o cliente */
 const SABORES = [
-  { id:'pessego', nome:'Pêssego', img:'pessego.png', cor:'#F6A26B', corEscura:'#D9653A', texto:'#2B1406',
+  { id:'pessego', nome:'Pêssego', img:'pessego.webp', cor:'#F6A26B', corEscura:'#D9653A', texto:'#2B1406',
     descricao:'Doce na medida e super refrescante. O queridinho de quem pede drink de fruta.',
     combina:'vodka, espumante e energético' },
-  { id:'melancia', nome:'Melancia', img:'melancia.png', cor:'#C8102E', corEscura:'#7A0A1C', texto:'#FFFFFF',
+  { id:'melancia', nome:'Melancia', img:'melancia.webp', cor:'#C8102E', corEscura:'#7A0A1C', texto:'#FFFFFF',
     descricao:'Sabor de verão o ano inteiro. Cor intensa que chama atenção no copo.',
     combina:'gin, vodka e energético' },
-  { id:'laranja', nome:'Laranja', img:'laranja.png', cor:'#F7861E', corEscura:'#C4520A', texto:'#2B1406',
+  { id:'laranja', nome:'Laranja', img:'laranja.webp', cor:'#F7861E', corEscura:'#C4520A', texto:'#2B1406',
     descricao:'Cítrico e equilibrado, vai bem com quase tudo que sai do balcão.',
     combina:'whisky, gin e energético' },
-  { id:'morango', nome:'Morango', img:'morango.png', cor:'#E0263F', corEscura:'#8F0E22', texto:'#FFFFFF',
+  { id:'morango', nome:'Morango', img:'morango.webp', cor:'#E0263F', corEscura:'#8F0E22', texto:'#FFFFFF',
     descricao:'Um clássico que nunca sai de moda. Gira rápido em qualquer ponto de venda.',
     combina:'vodka, espumante e energético' },
-  { id:'maracuja', nome:'Maracujá', img:'maracuja.png', cor:'#F5C518', corEscura:'#C98F00', texto:'#2B1F00',
+  { id:'maracuja', nome:'Maracujá', img:'maracuja.webp', cor:'#F5C518', corEscura:'#C98F00', texto:'#2B1F00',
     descricao:'Azedinho e tropical, dá personalidade ao drink logo no primeiro gole.',
     combina:'cachaça, vodka e energético' },
-  { id:'sal-e-limao', nome:'Sal e limão', pre:'Gelo para cerveja', img:'sal-e-limao.png', cor:'#F3A712', corEscura:'#B86E00', texto:'#2B1A00',
+  { id:'sal-e-limao', nome:'Sal e limão', pre:'Gelo para cerveja', img:'sal-e-limao.webp', cor:'#F3A712', corEscura:'#B86E00', texto:'#2B1A00',
     descricao:'Feito para a cerveja: um toque de sal e limão que deixa cada gole mais gelado.',
     combina:'cerveja' },
-  { id:'agua-de-coco', nome:'Água de coco', img:'agua-de-coco.png', cor:'#1E7A35', corEscura:'#0B4A1E', texto:'#FFFFFF',
+  { id:'agua-de-coco', nome:'Água de coco', img:'agua-de-coco.webp', cor:'#1E7A35', corEscura:'#0B4A1E', texto:'#FFFFFF',
     descricao:'Leve e natural. Perfeito para drinks mais suaves e para o calor.',
     combina:'gin, vodka e energético tropical' },
-  { id:'maca-verde', nome:'Maçã verde', img:'maca-verde.png', cor:'#8CC63F', corEscura:'#4E8A1A', texto:'#10220A',
+  { id:'maca-verde', nome:'Maçã verde', img:'maca-verde.webp', cor:'#8CC63F', corEscura:'#4E8A1A', texto:'#10220A',
     descricao:'Ácida, fresca e com aquela cor que fica linda no copo.',
     combina:'vodka, gin e energético' },
-  { id:'mel', nome:'Mel', img:'mel.png', cor:'#E9B949', corEscura:'#A87412', texto:'#2B1C00',
+  { id:'mel', nome:'Mel', img:'mel.webp', cor:'#E9B949', corEscura:'#A87412', texto:'#2B1C00',
     descricao:'Doce e encorpado, dá um toque especial em drinks com destilados.',
     combina:'whisky, cachaça e vodka' }
 ];
@@ -50,6 +50,7 @@ SABORES.forEach((s, i) => {
   const el = tpl.content.firstElementChild.cloneNode(true);
   el.id = 'sabor-' + s.id;
   if (i % 2 === 1) el.classList.add('banner--invertido');
+  el.style.setProperty('--lado', i % 2 === 1 ? 1 : -1);
   el.style.setProperty('--cor', s.cor);
   el.style.setProperty('--cor-escura', s.corEscura);
   el.style.setProperty('--texto', s.texto);
@@ -59,7 +60,7 @@ SABORES.forEach((s, i) => {
 
   el.querySelector('.banner__marca-dagua').textContent = s.nome;
   const img = el.querySelector('.banner__img');
-  img.src = 'assets/img/produtos/' + s.img;
+  img.dataset.src = 'assets/img/produtos/' + s.img;   // carregado só perto da hora de aparecer
   img.alt = 'Pacote de gelo para drink Green sabor ' + s.nome.toLowerCase();
 
   el.querySelector('.banner__contador').textContent =
@@ -144,43 +145,109 @@ const marcarTopo = () => topo.classList.toggle('rolou', window.scrollY > 40);
 marcarTopo();
 window.addEventListener('scroll', marcarTopo, { passive: true });
 
+
 /* =========================================================
-   ANIMAÇÕES (GSAP)
+   CARREGAMENTO SOB DEMANDA (imagens e vídeo)
    ========================================================= */
-if (window.gsap && window.ScrollTrigger) {
-  gsap.registerPlugin(ScrollTrigger);
-  const mm = gsap.matchMedia();
-
-  /* ----- Comum: entrada do hero e inclinação com o mouse ----- */
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    document.documentElement.classList.add('js-anima');
-    gsap.timeline({ defaults: { ease: 'power4.out' } })
-      .from('.hero__selo', { y: 20, opacity: 0, duration: .8 })
-      .from('.hero__titulo .linha > span', { yPercent: 110, duration: 1.1, stagger: .12 }, '-=.5')
-      .from(['.hero__texto', '.hero__acoes'], { y: 30, opacity: 0, duration: .9, stagger: .12 }, '-=.6')
-      .from('.hero__rolar', { opacity: 0, duration: .8 }, '-=.4');
-
-    if (window.matchMedia('(hover: hover)').matches) {
-      document.querySelectorAll('.banner').forEach((b) => {
-        const img = b.querySelector('.banner__img');
-        const area = b.querySelector('.banner__palco');
-        const rx = gsap.quickTo(img, 'rotationX', { duration: .6, ease: 'power3.out' });
-        const ry = gsap.quickTo(img, 'rotationY', { duration: .6, ease: 'power3.out' });
-        b.addEventListener('mousemove', (e) => {
-          const r = area.getBoundingClientRect();
-          ry(((e.clientX - (r.left + r.width / 2)) / r.width) * 30);
-          rx(-((e.clientY - (r.top + r.height / 2)) / r.height) * 20);
-        });
-        b.addEventListener('mouseleave', () => { rx(0); ry(0); });
-      });
-    }
-    return () => document.documentElement.classList.remove('js-anima');
+function carregarImagens(raiz) {
+  raiz.querySelectorAll('img[data-src]').forEach((img) => {
+    img.src = img.dataset.src;
+    img.removeAttribute('data-src');
   });
+}
+function carregarProximos(i) {                 // painel atual, o anterior e os 2 próximos
+  for (let k = Math.max(0, i - 1); k <= Math.min(paineis.length - 1, i + 2); k++) carregarImagens(paineis[k]);
+}
 
-  /* ----- COMPUTADOR: palco com transições de sobreposição -----
-     Cada seção entra por cima da anterior, alternando a direção. */
-  mm.add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
-    document.documentElement.classList.add('palco-ativo');
+const MOVIMENTO  = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+const COMPUTADOR = window.matchMedia('(min-width: 901px)').matches;
+
+// Vídeo do topo: só depois que a página terminou de carregar; versão leve no celular
+function carregarVideo() {
+  const v = document.querySelector('.hero__video');
+  const economia = navigator.connection && navigator.connection.saveData;
+  if (!v || !MOVIMENTO || economia) return;
+  v.src = COMPUTADOR ? v.dataset.video : v.dataset.videoMobile;
+  v.autoplay = true;
+  const p = v.play();
+  if (p && p.catch) p.catch(() => {});
+}
+if (document.readyState === 'complete') setTimeout(carregarVideo, 300);
+else window.addEventListener('load', () => setTimeout(carregarVideo, 300));
+
+// Imagens fora do palco fixo (ou sem animação): carregam ao chegar perto da tela
+function lazyPorRolagem() {
+  const io = new IntersectionObserver((itens) => {
+    itens.forEach((it) => { if (it.isIntersecting) { carregarImagens(it.target); io.unobserve(it.target); } });
+  }, { rootMargin: '900px 0px' });
+  paineis.forEach((p) => io.observe(p));
+}
+
+/* =========================================================
+   CELULAR (e sem animação): só CSS + IntersectionObserver
+   ========================================================= */
+function iniciarCelular() {
+  lazyPorRolagem();
+  if (!MOVIMENTO) return;                       // "reduzir movimento": página estática
+  const raiz = document.documentElement;
+  raiz.classList.add('js-anima', 'modo-mob');
+
+  // seções altas grudam pelo fim; as baixas, pelo topo
+  const gruda = () => paineis.forEach((p) =>
+    p.style.setProperty('--gruda', Math.min(0, window.innerHeight - p.offsetHeight) + 'px'));
+  gruda();
+  window.addEventListener('resize', gruda);
+  window.addEventListener('load', gruda);
+
+  // entradas: a seção ganha .em-cena quando aparece
+  const ioCena = new IntersectionObserver((itens) => {
+    itens.forEach((it) => {
+      if (!it.isIntersecting) return;
+      it.target.classList.add('em-cena');
+      if (it.target.classList.contains('fabrica')) contarAte(it.target.querySelector('.contador'));
+      ioCena.unobserve(it.target);
+    });
+  }, { threshold: 0.2 });
+  paineis.forEach((p) => { if (!p.classList.contains('hero')) ioCena.observe(p); });
+
+  // passos do "Como funciona" acendem ao passar do meio da tela
+  const ioPasso = new IntersectionObserver((itens) => {
+    itens.forEach((it) => it.target.classList.toggle('ativo', it.boundingClientRect.top < window.innerHeight * .6));
+  }, { rootMargin: '0px 0px -40% 0px', threshold: [0, 1] });
+  document.querySelectorAll('.passo').forEach((p) => ioPasso.observe(p));
+
+  // pontos laterais não aparecem no celular; nada a fazer
+}
+
+function contarAte(el) {
+  if (!el || el.dataset.contou) return;
+  el.dataset.contou = '1';
+  const fim = Number(el.dataset.ate || 2019), ini = 1990, t0 = performance.now(), dur = 1200;
+  const passo = (t) => {
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(ini + (fim - ini) * e);
+    if (k < 1) requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+}
+
+/* =========================================================
+   COMPUTADOR: palco com transições de sobreposição (GSAP)
+   As bibliotecas só são baixadas aqui.
+   ========================================================= */
+function carregarScript(src) {
+  return new Promise((ok, erro) => {
+    const s = document.createElement('script');
+    s.src = src; s.async = true; s.onload = ok; s.onerror = erro;
+    document.head.appendChild(s);
+  });
+}
+
+function iniciarComputador() {
+  gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add('js-anima', 'palco-ativo');
+  carregarProximos(0);
+
 
     // Direção de entrada de cada painel (repete em ciclo)
     //  cima     = sobe de baixo para cima
@@ -332,6 +399,7 @@ if (window.gsap && window.ScrollTrigger) {
         const tempo = linha.time();
         let atual = 0;
         for (let i = 0; i < inicio.length; i++) if (tempo >= inicio[i] - T * .5) atual = i;
+        carregarProximos(atual);
         const sabor = paineis[atual].dataset.sabor;
         marcarSabor(sabor !== undefined ? Number(sabor) : null);
       }
@@ -349,78 +417,50 @@ if (window.gsap && window.ScrollTrigger) {
     };
     document.addEventListener('click', irPara);
 
-    return () => {
-      document.documentElement.classList.remove('palco-ativo');
-      document.removeEventListener('click', irPara);
-      marcarSabor(null);
-    };
-  });
 
-  /* ----- CELULAR: cada seção sobe por cima da anterior ----- */
-  mm.add('(max-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
-    gsap.to('.hero__conteudo', { yPercent: -25, opacity: 0, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-    paineis.forEach((p, i) => {
-      if (i === paineis.length - 1) return;
-      // fixa o painel quando o fim dele chega ao fim da tela; o próximo sobe por cima
-      ScrollTrigger.create({
-        trigger: p,
-        start: () => (p.offsetHeight <= window.innerHeight ? 'top top' : 'bottom bottom'),
-        end: () => '+=' + window.innerHeight,
-        pin: true,
-        pinSpacing: false,
-        invalidateOnRefresh: true
+    if (window.matchMedia('(hover: hover)').matches) {
+      document.querySelectorAll('.banner').forEach((b) => {
+        const img = b.querySelector('.banner__img');
+        const area = b.querySelector('.banner__palco');
+        const rx = gsap.quickTo(img, 'rotationX', { duration: .6, ease: 'power3.out' });
+        const ry = gsap.quickTo(img, 'rotationY', { duration: .6, ease: 'power3.out' });
+        b.addEventListener('mousemove', (e) => {
+          const r = area.getBoundingClientRect();
+          ry(((e.clientX - (r.left + r.width / 2)) / r.width) * 30);
+          rx(-((e.clientY - (r.top + r.height / 2)) / r.height) * 20);
+        });
+        b.addEventListener('mouseleave', () => { rx(0); ry(0); });
       });
-      gsap.to(p.querySelector('.painel__veu'), { opacity: .55, ease: 'none',
-        scrollTrigger: { trigger: paineis[i + 1], start: 'top bottom', end: 'top top', scrub: true } });
-    });
-
-    paineis.forEach((b) => {
-      if (!b.classList.contains('banner')) return;
-      const lado = b.classList.contains('banner--invertido') ? 1 : -1;
-      gsap.timeline({ scrollTrigger: { trigger: b, start: 'top 70%', toggleActions: 'play none none reverse' } })
-        .from(b.querySelector('.banner__palco'), { xPercent: 30 * lado, rotationY: 70 * lado, transformPerspective: 1200,
-          scale: .75, opacity: 0, duration: 1.1, ease: 'power3.out' })
-        .from(b.querySelectorAll('.banner__info > *'), { y: 30, opacity: 0, duration: .7, stagger: .07, ease: 'power3.out' }, '-=.7');
-      gsap.fromTo(b.querySelector('.banner__pacote'), { rotationY: -24 * lado, y: 40 }, { rotationY: 24 * lado, y: -40, ease: 'none',
-        scrollTrigger: { trigger: b, start: 'top bottom', end: 'bottom top', scrub: 1 } });
-    });
-
-    // Por que revender: cards entram em sequência
-    gsap.from('.porque__topo > *', { y: 30, opacity: 0, duration: .7, stagger: .08, ease: 'power3.out',
-      scrollTrigger: { trigger: '.porque', start: 'top 70%' } });
-    gsap.from('.card', { y: 80, rotation: (k) => [-10, 8, -6, 10][k], opacity: 0, duration: .8, stagger: .12, ease: 'power3.out',
-      scrollTrigger: { trigger: '.porque__cards', start: 'top 85%' } });
-
-    // Fábrica: foto revelada, contador e checks
-    gsap.fromTo('.foto--grande', { clipPath: 'inset(100% 0% 0% 0% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)',
-      duration: 1.1, ease: 'power2.inOut', scrollTrigger: { trigger: '.fabrica__fotos', start: 'top 80%' } });
-    gsap.from('.foto--pequena', { y: 60, rotation: -8, opacity: 0, duration: .8, delay: .4, ease: 'power2.out',
-      scrollTrigger: { trigger: '.fabrica__fotos', start: 'top 80%' } });
-    const cont = document.querySelector('.contador');
-    gsap.fromTo(cont, { textContent: 1990 }, { textContent: Number(cont.dataset.ate || 2019), snap: { textContent: 1 },
-      duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: cont, start: 'top 85%' } });
-    gsap.from('.fabrica__lista li', { x: -24, opacity: 0, duration: .6, stagger: .1, ease: 'power2.out',
-      scrollTrigger: { trigger: '.fabrica__lista', start: 'top 85%' } });
-    gsap.fromTo('.check path', { strokeDashoffset: 16 }, { strokeDashoffset: 0, duration: .4, stagger: .1, delay: .2,
-      scrollTrigger: { trigger: '.fabrica__lista', start: 'top 85%' } });
-
-    // Como funciona: linha vertical desenhada pela rolagem e passos acendendo
-    const passosM = document.querySelectorAll('.passo');
-    gsap.fromTo('.rota__progresso', { scaleY: 0 }, { scaleY: 1, ease: 'none',
-      scrollTrigger: { trigger: '.rota', start: 'top 70%', end: 'bottom 60%', scrub: true,
-        onUpdate: (st) => passosM.forEach((ps, k) => ps.classList.toggle('ativo', st.progress >= k * .3 && st.progress > 0)) } });
-    gsap.fromTo('.rota__pacote', { top: '0%' }, { top: '100%', ease: 'none',
-      scrollTrigger: { trigger: '.rota', start: 'top 70%', end: 'bottom 60%', scrub: true } });
-
-    paineis.forEach((p) => {
-      const n = Number(p.dataset.sabor);
-      if (Number.isNaN(n)) return;
-      ScrollTrigger.create({ trigger: p, start: 'top center', end: 'bottom center',
-        onToggle: (s) => s.isActive && marcarSabor(n) });
-    });
-  });
+    }
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
+
+if (COMPUTADOR && MOVIMENTO) {
+  // A tela fixa é montada no primeiro sinal de uso (mouse, rolagem, toque ou teclado).
+  // O topo já anima só com CSS, então a pessoa não percebe; e a página abre mais leve.
+  ['gsap.min.js', 'ScrollTrigger.min.js'].forEach((f) => {       // baixa antes, sem executar
+    const l = document.createElement('link');
+    l.rel = 'prefetch'; l.as = 'script'; l.href = 'js/vendor/' + f;
+    document.head.appendChild(l);
+  });
+  const EVENTOS = ['pointermove', 'pointerdown', 'wheel', 'scroll', 'keydown', 'touchstart'];
+  let iniciou = false;
+  const comecar = () => {
+    if (iniciou) return;
+    iniciou = true;
+    EVENTOS.forEach((ev) => window.removeEventListener(ev, comecar));
+    const y = window.scrollY;
+    carregarScript('js/vendor/gsap.min.js')
+      .then(() => carregarScript('js/vendor/ScrollTrigger.min.js'))
+      .then(() => { iniciarComputador(); if (y > 0) window.scrollTo(0, y); })
+      .catch(iniciarCelular);                   // se a biblioteca falhar, usa a versão leve
+  };
+  EVENTOS.forEach((ev) => window.addEventListener(ev, comecar, { passive: true }));
+  if (location.hash) comecar();                 // chegou por um link com #seção
+} else {
+  iniciarCelular();
+}
+
+// Se a pessoa redimensionar e trocar entre computador e celular, recarrega no modo certo
+window.matchMedia('(min-width: 901px)').addEventListener('change', () => location.reload());

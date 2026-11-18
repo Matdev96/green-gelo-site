@@ -29,9 +29,11 @@
   <!-- Ícones -->
   <link rel="icon" type="image/png" href="assets/img/logo-green.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Fontes hospedadas no próprio site (sem depender do Google Fonts) -->
+  <link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Imagem do topo carrega primeiro -->
+  <link rel="preload" href="assets/video/hero-poster.webp" as="image" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -39,7 +41,7 @@
   <!-- ============ CABEÇALHO ============ -->
   <header class="topo" id="topo">
     <a class="topo__marca" href="#inicio" aria-label="Green Gelo Saborizado — início">
-      <img src="assets/img/logo-green.png" alt="" width="48" height="48">
+      <img src="assets/img/logo-green-96.webp" alt="" width="48" height="48">
       <span>Green Gelo<br><small>Saborizado</small></span>
     </a>
     <nav class="topo__nav" aria-label="Menu principal">
@@ -56,10 +58,10 @@
 
     <!-- ============ SEÇÃO 1 · HERO COM VÍDEO EM TELA CHEIA ============ -->
     <section class="painel hero" id="inicio">
-      <video class="hero__video" autoplay muted loop playsinline preload="auto"
-             poster="assets/video/hero-poster.jpg" aria-hidden="true">
-        <source src="assets/video/hero-loop.mp4" type="video/mp4">
-      </video>
+      <!-- O vídeo só é carregado depois da página (js/main.js); no celular usa a versão leve -->
+      <video class="hero__video" muted loop playsinline preload="none"
+             poster="assets/video/hero-poster.webp" aria-hidden="true"
+             data-video="assets/video/hero-loop.mp4" data-video-mobile="assets/video/hero-loop-mobile.mp4"></video>
       <div class="hero__sombra" aria-hidden="true"></div>
 
       <div class="hero__conteudo">
@@ -152,10 +154,10 @@
         </div>
         <div class="fabrica__fotos">
           <figure class="foto foto--grande">
-            <img src="assets/img/fotos/fabrica-envase.jpg" alt="Máquina de envase do gelo saborizado na fábrica da Green em São Paulo" width="960" height="1280" loading="lazy">
+            <img data-src="assets/img/fotos/fabrica-envase.webp" alt="Máquina de envase do gelo saborizado na fábrica da Green em São Paulo" width="800" height="1067" decoding="async">
           </figure>
           <figure class="foto foto--pequena">
-            <img src="assets/img/fotos/equipe.jpg" alt="Equipe da Green Gelo Saborizado" width="361" height="640" loading="lazy">
+            <img data-src="assets/img/fotos/equipe.webp" alt="Equipe da Green Gelo Saborizado" width="361" height="640" decoding="async">
           </figure>
         </div>
       </div>
@@ -172,7 +174,7 @@
         <div class="rota">
           <div class="rota__trilho" aria-hidden="true">
             <span class="rota__progresso"></span>
-            <img class="rota__pacote" src="assets/img/produtos/morango.png" alt="" width="286" height="760">
+            <img class="rota__pacote" data-src="assets/img/produtos/morango-mini.webp" alt="" width="60" height="160" decoding="async">
           </div>
           <ol class="rota__passos">
             <li class="passo"><span class="passo__ponto" aria-hidden="true"></span><span class="passo__num">01</span><h3>Cadastre seu ponto</h3><p>Chame a Green no WhatsApp e informe seu estabelecimento e sua cidade.</p></li>
@@ -212,7 +214,7 @@
   <footer class="rodape">
     <div class="rodape__grade">
       <div class="rodape__marca">
-        <img src="assets/img/logo-green.png" alt="" width="56" height="56">
+        <img src="assets/img/logo-green-96.webp" alt="" width="56" height="56" loading="lazy">
         <div>
           <strong>Green Gelo Saborizado</strong>
           <p>Indústria de gelo saborizado para drinks em São Paulo desde 2019. Venda exclusiva para revendedores.</p>
@@ -247,7 +249,7 @@
         <div class="banner__palco">
           <div class="banner__pacote">
             <div class="banner__flutua">
-              <img class="banner__img" alt="" width="286" height="760" loading="lazy">
+              <img class="banner__img" alt="" width="286" height="760" decoding="async">
             </div>
           </div>
           <span class="banner__chao" aria-hidden="true"></span>
@@ -265,8 +267,7 @@
     </article>
   </template>
 
-  <script src="js/vendor/gsap.min.js"></script>
-  <script src="js/vendor/ScrollTrigger.min.js"></script>
+  <!-- GSAP + ScrollTrigger são carregados pelo main.js só no computador -->
   <script src="js/main.js"></script>
 </body>
 </html>
