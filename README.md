@@ -20,8 +20,29 @@ assets/img/         logo e embalagens (PNG transparente)
 assets/video/       vídeo do topo (loop sem som) + poster
 ```
 
-Para editar textos, cores ou sabores, altere a lista `SABORES` no início de `js/main.js`.
-As perguntas do FAQ ficam na lista `DUVIDAS`, no mesmo arquivo.
+## Editar conteúdo (sabores, FAQ, título, descrição, endereço do site)
+
+O conteúdo fica em arquivos de dados e é escrito no `index.html` por um gerador:
+
+| Arquivo | O que tem |
+|---|---|
+| `dados/site.json` | endereço do site, título, meta description, contatos, CNPJ, endereço |
+| `dados/sabores.json` | os 9 sabores (nome, cores, imagem, descrição, "combina com") |
+| `dados/duvidas.json` | perguntas e respostas do FAQ |
+
+Depois de editar, rode (Node 18+, sem instalar nada):
+
+```bash
+node ferramentas/gerar.mjs
+```
+
+Ele atualiza no `index.html` o bloco de SEO (título, descrição, Open Graph e dados
+estruturados JSON-LD), os banners dos sabores e o FAQ, e gera `sitemap.xml`,
+`robots.txt` e `llms.txt`. Não edite à mão o que está entre os comentários
+`<!-- GERADO:... -->`.
+
+**Mudança de domínio** (ex.: greengelo.com.br): troque `url` em `dados/site.json`,
+rode o gerador e ajuste os caminhos `/green-gelo-site/` do `404.html`.
 
 Ordem da página: vídeo → sabores → por que revender → fábrica → como funciona → chamada final → dúvidas → rodapé.
 
@@ -33,6 +54,7 @@ Ordem da página: vídeo → sabores → por que revender → fábrica → como 
 | v2 | v1 + transições de sobreposição entre seções |
 | v3 | v2 + Por que revender, Fábrica, Como funciona, Dúvidas (rolagem normal) e rodapé |
 | v4 | v3 + desempenho: WebP, fontes no site, vídeo leve no celular, GSAP só no computador |
+| v5 | v4 + SEO: conteúdo no HTML, dados estruturados, sitemap, robots, llms.txt, 404 |
 
 ## Desempenho
 
@@ -43,3 +65,13 @@ Ordem da página: vídeo → sabores → por que revender → fábrica → como 
 - **Celular:** nenhuma biblioteca; seções com `position: sticky`, entradas com CSS e `IntersectionObserver`,
   e giro da embalagem / linha da rota com CSS *scroll-driven animations* (onde houver suporte).
 - Imagens dos painéis usam `data-src` e são carregadas perto da hora de aparecer.
+
+## SEO
+
+- Título e meta description em `dados/site.json`.
+- Sabores e FAQ escritos no HTML (lidos por buscadores e IAs sem precisar de JavaScript).
+- Dados estruturados (JSON-LD): Organization, WebSite, WebPage, ItemList de Product (sabores) e FAQPage.
+- `sitemap.xml` com as imagens dos produtos, `robots.txt`, `llms.txt`, `site.webmanifest` e `404.html`.
+- **Atenção:** no GitHub Pages de projeto (`matdev96.github.io/green-gelo-site/`) os buscadores só leem o
+  `robots.txt` da raiz do domínio. Ele passa a valer de verdade quando o site estiver no domínio próprio.
+  Até lá, envie o `sitemap.xml` direto no Google Search Console.

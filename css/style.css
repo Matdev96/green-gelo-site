@@ -73,6 +73,8 @@ h1,h2,h3{margin:0}
 @keyframes linha-sobe{from{transform:translateY(38%)}to{transform:none}}
 @keyframes aparece{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hero__titulo .destaque{color:var(--limao)}
+.hero__titulo .hero__selo{display:table;font-family:var(--fonte-texto);font-size:13px;line-height:1.4;letter-spacing:.08em;max-width:none}
+.rodape__legal{font-style:normal}
 .hero__texto{max-width:480px;margin:24px 0 32px;font-size:clamp(16px,1.6vw,19px);line-height:1.6;color:rgba(255,255,255,.88)}
 .hero__acoes{display:flex;flex-wrap:wrap;gap:12px}
 .hero__rolar{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.8)}
@@ -339,7 +341,7 @@ h1,h2,h3{margin:0}
   .hero__sombra{background:linear-gradient(0deg, rgba(6,58,29,.95) 0%, rgba(6,58,29,.55) 55%, rgba(6,58,29,.35) 100%)}
   .hero__conteudo{align-self:flex-end;padding-bottom:48px}
   .hero__rolar{display:none}
-  .hero__selo{font-size:11px}
+  .hero__titulo .hero__selo{font-size:11px;letter-spacing:.03em;white-space:nowrap;padding:7px 12px}
 }
 @media (max-width: 520px){
   .topo__cta{display:none}

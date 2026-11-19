@@ -1,0 +1,101 @@
+[
+  {
+    "id": "pessego",
+    "nome": "Pêssego",
+    "img": "assets/img/produtos/pessego.webp",
+    "cor": "#F6A26B",
+    "corEscura": "#D9653A",
+    "texto": "#2B1406",
+    "descricao": "Doce na medida e super refrescante. O queridinho de quem pede drink de fruta.",
+    "combina": "vodka, espumante e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "melancia",
+    "nome": "Melancia",
+    "img": "assets/img/produtos/melancia.webp",
+    "cor": "#C8102E",
+    "corEscura": "#7A0A1C",
+    "texto": "#FFFFFF",
+    "descricao": "Sabor de verão o ano inteiro. Cor intensa que chama atenção no copo.",
+    "combina": "gin, vodka e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "laranja",
+    "nome": "Laranja",
+    "img": "assets/img/produtos/laranja.webp",
+    "cor": "#F7861E",
+    "corEscura": "#C4520A",
+    "texto": "#2B1406",
+    "descricao": "Cítrico e equilibrado, vai bem com quase tudo que sai do balcão.",
+    "combina": "whisky, gin e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "morango",
+    "nome": "Morango",
+    "img": "assets/img/produtos/morango.webp",
+    "cor": "#E0263F",
+    "corEscura": "#8F0E22",
+    "texto": "#FFFFFF",
+    "descricao": "Um clássico que nunca sai de moda. Gira rápido em qualquer ponto de venda.",
+    "combina": "vodka, espumante e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "maracuja",
+    "nome": "Maracujá",
+    "img": "assets/img/produtos/maracuja.webp",
+    "cor": "#F5C518",
+    "corEscura": "#C98F00",
+    "texto": "#2B1F00",
+    "descricao": "Azedinho e tropical, dá personalidade ao drink logo no primeiro gole.",
+    "combina": "cachaça, vodka e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "sal-e-limao",
+    "nome": "Sal e limão",
+    "pre": "Gelo para cerveja",
+    "img": "assets/img/produtos/sal-e-limao.webp",
+    "cor": "#F3A712",
+    "corEscura": "#B86E00",
+    "texto": "#2B1A00",
+    "descricao": "Feito para a cerveja: um toque de sal e limão que deixa cada gole mais gelado.",
+    "combina": "cerveja"
+  },
+  {
+    "id": "agua-de-coco",
+    "nome": "Água de coco",
+    "img": "assets/img/produtos/agua-de-coco.webp",
+    "cor": "#1E7A35",
+    "corEscura": "#0B4A1E",
+    "texto": "#FFFFFF",
+    "descricao": "Leve e natural. Perfeito para drinks mais suaves e para o calor.",
+    "combina": "gin, vodka e energético tropical",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "maca-verde",
+    "nome": "Maçã verde",
+    "img": "assets/img/produtos/maca-verde.webp",
+    "cor": "#8CC63F",
+    "corEscura": "#4E8A1A",
+    "texto": "#10220A",
+    "descricao": "Ácida, fresca e com aquela cor que fica linda no copo.",
+    "combina": "vodka, gin e energético",
+    "pre": "Gelo sabor"
+  },
+  {
+    "id": "mel",
+    "nome": "Mel",
+    "img": "assets/img/produtos/mel.webp",
+    "cor": "#E9B949",
+    "corEscura": "#A87412",
+    "texto": "#2B1C00",
+    "descricao": "Doce e encorpado, dá um toque especial em drinks com destilados.",
+    "combina": "whisky, cachaça e vodka",
+    "pre": "Gelo sabor"
+  }
+]

@@ -1,0 +1,36 @@
+# Green Gelo Saborizado
+
+> Indústria de gelo saborizado para drinks em São Paulo/SP, fundada em 2019. Vende exclusivamente para revendedores (adegas, tabacarias, bares, quiosques, restaurantes, distribuidoras e eventos) e atende todo o Brasil. O produto já chega congelado, em embalagem que abre fácil, com 9 sabores.
+
+Informações principais:
+
+- Produto: gelo saborizado em sachê de 190 g (200 ml), para usar com destilados, energéticos e cerveja.
+- Sabores (9): pêssego, melancia, laranja, morango, maracujá, sal e limão (gelo para cerveja), água de coco, maçã verde, mel.
+- Fábrica própria e indústria 100% regularizada em São Paulo/SP.
+- Venda: somente para revendedores e distribuidores; não vende para consumidor final.
+- Como revender: chamar no WhatsApp, receber a tabela de revenda, o pedido mínimo e o prazo da região, fazer o pedido com um consultor e repor pelo WhatsApp.
+- Armazenamento: o gelo precisa de freezer (temperatura controlada).
+- Pedido mínimo e prazo de entrega variam conforme a região e o tipo de ponto; são informados pelo WhatsApp.
+
+## Páginas
+
+- [Página inicial](https://matdev96.github.io/green-gelo-site/): apresentação da marca, os 9 sabores, por que revender, a fábrica, como funciona e dúvidas frequentes.
+- [Sabores](https://matdev96.github.io/green-gelo-site/#sabores): os 9 sabores, com descrição e sugestão de drink.
+- [Por que revender](https://matdev96.github.io/green-gelo-site/#porque): vantagens para o ponto de venda.
+- [A fábrica](https://matdev96.github.io/green-gelo-site/#fabrica): produção própria em São Paulo desde 2019.
+- [Como funciona](https://matdev96.github.io/green-gelo-site/#como-funciona): os 4 passos do cadastro à reposição.
+- [Dúvidas frequentes](https://matdev96.github.io/green-gelo-site/#duvidas): pedido mínimo, entrega, freezer e distribuição.
+
+## Dúvidas frequentes
+
+- Qual é o pedido mínimo? Varia conforme a região e o tipo de ponto. Você recebe as condições pelo WhatsApp logo após o cadastro.
+- Vocês entregam na minha cidade? A fábrica fica em São Paulo e atendemos todo o Brasil. Informe sua cidade no WhatsApp e confirmamos a entrega e o prazo.
+- Preciso de freezer? Sim. O gelo é um produto que necessita de temperatura controlada e deve ser conservado em freezer.
+- Posso ser distribuidor? Sim, avaliamos parcerias de distribuição. Fale com a gente no WhatsApp e conte sobre a sua operação.
+
+## Contato
+
+- WhatsApp comercial: +55 11 99481-4543 (https://wa.me/5511994814543)
+- Instagram: https://www.instagram.com/greengelo_br/
+- Endereço: Rua Luis Henrique Pompeu de Camargo, 24, São Paulo/SP, CEP 04815-350
+- Razão social: Green Gelo Saborizado LTDA · CNPJ 34.041.212/0001-39

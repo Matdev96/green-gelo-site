@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://matdev96.github.io/green-gelo-site/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/pessego.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor pêssego</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/melancia.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor melancia</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/laranja.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor laranja</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/morango.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor morango</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/maracuja.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor maracujá</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/sal-e-limao.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor sal e limão</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/agua-de-coco.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor água de coco</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/maca-verde.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor maçã verde</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/produtos/mel.webp</image:loc>
+      <image:title>Gelo saborizado Green sabor mel</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/fotos/fabrica-envase.webp</image:loc>
+      <image:title>Máquina de envase na fábrica da Green em São Paulo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/fotos/equipe.webp</image:loc>
+      <image:title>Equipe da Green Gelo Saborizado</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://matdev96.github.io/green-gelo-site/assets/img/og-green.jpg</image:loc>
+      <image:title>Green Gelo Saborizado</image:title>
+    </image:image>
+  </url>
+</urlset>

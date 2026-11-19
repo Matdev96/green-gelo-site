@@ -3,84 +3,20 @@
    Usa GSAP + ScrollTrigger (arquivos locais em js/vendor)
    ========================================================= */
 
-const WHATSAPP = '5511994814543';
+/* Os banners dos sabores e o FAQ já vêm escritos no index.html
+   (gerados por ferramentas/gerar.mjs a partir de dados/*.json).
+   Aqui o script só lê o que está na página. */
 
-/* ---------- Lista de sabores ----------
-   cor        = fundo do banner
-   corEscura  = sombra/gradiente do fundo
-   texto      = cor do texto (escolhida para dar contraste)
-   descricao / combina = textos de exemplo: confirmar com o cliente */
-const SABORES = [
-  { id:'pessego', nome:'Pêssego', img:'pessego.webp', cor:'#F6A26B', corEscura:'#D9653A', texto:'#2B1406',
-    descricao:'Doce na medida e super refrescante. O queridinho de quem pede drink de fruta.',
-    combina:'vodka, espumante e energético' },
-  { id:'melancia', nome:'Melancia', img:'melancia.webp', cor:'#C8102E', corEscura:'#7A0A1C', texto:'#FFFFFF',
-    descricao:'Sabor de verão o ano inteiro. Cor intensa que chama atenção no copo.',
-    combina:'gin, vodka e energético' },
-  { id:'laranja', nome:'Laranja', img:'laranja.webp', cor:'#F7861E', corEscura:'#C4520A', texto:'#2B1406',
-    descricao:'Cítrico e equilibrado, vai bem com quase tudo que sai do balcão.',
-    combina:'whisky, gin e energético' },
-  { id:'morango', nome:'Morango', img:'morango.webp', cor:'#E0263F', corEscura:'#8F0E22', texto:'#FFFFFF',
-    descricao:'Um clássico que nunca sai de moda. Gira rápido em qualquer ponto de venda.',
-    combina:'vodka, espumante e energético' },
-  { id:'maracuja', nome:'Maracujá', img:'maracuja.webp', cor:'#F5C518', corEscura:'#C98F00', texto:'#2B1F00',
-    descricao:'Azedinho e tropical, dá personalidade ao drink logo no primeiro gole.',
-    combina:'cachaça, vodka e energético' },
-  { id:'sal-e-limao', nome:'Sal e limão', pre:'Gelo para cerveja', img:'sal-e-limao.webp', cor:'#F3A712', corEscura:'#B86E00', texto:'#2B1A00',
-    descricao:'Feito para a cerveja: um toque de sal e limão que deixa cada gole mais gelado.',
-    combina:'cerveja' },
-  { id:'agua-de-coco', nome:'Água de coco', img:'agua-de-coco.webp', cor:'#1E7A35', corEscura:'#0B4A1E', texto:'#FFFFFF',
-    descricao:'Leve e natural. Perfeito para drinks mais suaves e para o calor.',
-    combina:'gin, vodka e energético tropical' },
-  { id:'maca-verde', nome:'Maçã verde', img:'maca-verde.webp', cor:'#8CC63F', corEscura:'#4E8A1A', texto:'#10220A',
-    descricao:'Ácida, fresca e com aquela cor que fica linda no copo.',
-    combina:'vodka, gin e energético' },
-  { id:'mel', nome:'Mel', img:'mel.webp', cor:'#E9B949', corEscura:'#A87412', texto:'#2B1C00',
-    descricao:'Doce e encorpado, dá um toque especial em drinks com destilados.',
-    combina:'whisky, cachaça e vodka' }
-];
-
-/* ---------- Monta os banners a partir da lista ---------- */
 const palco   = document.getElementById('palco');
-const antesDe = document.getElementById('porque');   // banners entram antes desta seção
 const pontos  = document.getElementById('pontos');
-const tpl     = document.getElementById('tpl-sabor');
+const banners = Array.from(palco.querySelectorAll('.banner'));
 
-SABORES.forEach((s, i) => {
-  const el = tpl.content.firstElementChild.cloneNode(true);
-  el.id = 'sabor-' + s.id;
-  if (i % 2 === 1) el.classList.add('banner--invertido');
-  el.style.setProperty('--lado', i % 2 === 1 ? 1 : -1);
-  el.style.setProperty('--cor', s.cor);
-  el.style.setProperty('--cor-escura', s.corEscura);
-  el.style.setProperty('--texto', s.texto);
-  el.style.setProperty('--texto-suave', s.texto === '#FFFFFF' ? 'rgba(255,255,255,.88)' : 'rgba(0,0,0,.72)');
-  el.setAttribute('aria-label', 'Sabor ' + s.nome);
-  el.dataset.sabor = i;
-
-  el.querySelector('.banner__marca-dagua').textContent = s.nome;
-  const img = el.querySelector('.banner__img');
-  img.dataset.src = 'assets/img/produtos/' + s.img;   // carregado só perto da hora de aparecer
-  img.alt = 'Pacote de gelo para drink Green sabor ' + s.nome.toLowerCase();
-
-  el.querySelector('.banner__contador').textContent =
-    String(i + 1).padStart(2, '0') + ' / ' + String(SABORES.length).padStart(2, '0');
-  el.querySelector('.banner__pre').textContent  = s.pre || 'Gelo sabor';
-  el.querySelector('.banner__nome').textContent = s.nome;
-  el.querySelector('.banner__desc').textContent = s.descricao;
-  el.querySelector('.banner__fichas').innerHTML =
-    '<li>190 g · 200 ml</li><li>Já vem congelado</li><li>Abre fácil</li>';
-  el.querySelector('.banner__combina').innerHTML = '<strong>Combina com:</strong> ' + s.combina;
-
-  const msg = 'Olá, Green! Vim pelo site e quero o gelo sabor ' + s.nome.toLowerCase() + '.';
-  el.querySelector('.banner__botao').href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg);
-
-  palco.insertBefore(el, antesDe);
-
+/* ---------- Pontos laterais (um por sabor) ---------- */
+banners.forEach((b) => {
   const p = document.createElement('a');
-  p.href = '#' + el.id;
-  p.innerHTML = '<span>' + s.nome + '</span>';
-  p.title = s.nome;
+  p.href = '#' + b.id;
+  p.title = b.dataset.nome;
+  p.innerHTML = '<span>' + b.dataset.nome + '</span>';
   pontos.appendChild(p);
 });
 
@@ -100,35 +36,19 @@ function marcarSabor(i) {
   pontos.classList.toggle('visivel', ativo);
   if (!ativo) return;
   links.forEach((l, k) => l.classList.toggle('ativo', k === i));
-  pontos.style.color = SABORES[i].texto;
+  pontos.style.color = banners[i].dataset.texto;
 }
-
 
 /* ---------- Bolinhas dos 9 sabores (card "9 sabores que giram") ---------- */
 const bolinhas = document.getElementById('bolinhas-sabores');
 if (bolinhas) {
-  bolinhas.innerHTML = SABORES.map((s) => '<i aria-hidden="true" style="background:' + s.cor + '" title="' + s.nome + '"></i>').join('') +
-    '<span class="so-leitor">' + SABORES.map((s) => s.nome).join(', ') + '</span>';
+  bolinhas.innerHTML = banners.map((b) => '<i aria-hidden="true" style="background:' + b.dataset.cor + '" title="' + b.dataset.nome + '"></i>').join('') +
+    '<span class="so-leitor">' + banners.map((b) => b.dataset.nome).join(', ') + '</span>';
 }
 
 /* ---------- Dúvidas frequentes (acordeão) ---------- */
-const DUVIDAS = [
-  { p: 'Qual é o pedido mínimo?', r: 'Varia conforme a região e o tipo de ponto. Você recebe as condições pelo WhatsApp logo após o cadastro.' },
-  { p: 'Vocês entregam na minha cidade?', r: 'A fábrica fica em São Paulo e atendemos todo o Brasil. Informe sua cidade no WhatsApp e confirmamos a entrega e o prazo.' },
-  { p: 'Preciso de freezer?', r: 'Sim. O gelo é um produto que necessita de temperatura controlada e deve ser conservado em freezer.' },
-  { p: 'Posso ser distribuidor?', r: 'Sim, avaliamos parcerias de distribuição. Fale com a gente no WhatsApp e conte sobre a sua operação.' }
-];
 const acordeao = document.getElementById('acordeao');
 if (acordeao) {
-  DUVIDAS.forEach((d, i) => {
-    const item = document.createElement('div');
-    item.className = 'pergunta';
-    item.innerHTML =
-      '<h3 style="margin:0"><button class="pergunta__botao" type="button" aria-expanded="false" aria-controls="resp-' + i + '" id="perg-' + i + '">' +
-      '<span>' + d.p + '</span><span class="pergunta__mais" aria-hidden="true"></span></button></h3>' +
-      '<div class="pergunta__resposta" id="resp-' + i + '" role="region" aria-labelledby="perg-' + i + '"><div><p>' + d.r + '</p></div></div>';
-    acordeao.appendChild(item);
-  });
   acordeao.addEventListener('click', (e) => {
     const b = e.target.closest('.pergunta__botao');
     if (!b) return;
@@ -142,7 +62,7 @@ if (acordeao) {
 /* ---------- Cabeçalho muda ao rolar ---------- */
 const topo = document.getElementById('topo');
 const marcarTopo = () => topo.classList.toggle('rolou', window.scrollY > 40);
-marcarTopo();
+requestAnimationFrame(marcarTopo);   // depois do primeiro desenho (evita recalcular o layout à toa)
 window.addEventListener('scroll', marcarTopo, { passive: true });
 
 
@@ -193,9 +113,12 @@ function iniciarCelular() {
   raiz.classList.add('js-anima', 'modo-mob');
 
   // seções altas grudam pelo fim; as baixas, pelo topo
-  const gruda = () => paineis.forEach((p) =>
-    p.style.setProperty('--gruda', Math.min(0, window.innerHeight - p.offsetHeight) + 'px'));
-  gruda();
+  const gruda = () => {
+    const alturas = paineis.map((p) => p.offsetHeight);          // primeiro lê tudo...
+    paineis.forEach((p, i) =>                                     // ...depois escreve
+      p.style.setProperty('--gruda', Math.min(0, window.innerHeight - alturas[i]) + 'px'));
+  };
+  requestAnimationFrame(gruda);
   window.addEventListener('resize', gruda);
   window.addEventListener('load', gruda);
 

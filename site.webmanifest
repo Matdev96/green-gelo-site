@@ -1,0 +1,14 @@
+{
+  "name": "Green Gelo Saborizado",
+  "short_name": "Green Gelo",
+  "description": "Gelo saborizado para drinks direto da fábrica em São Paulo.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#063A1D",
+  "theme_color": "#063A1D",
+  "icons": [
+    { "src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/img/logo-green.png", "sizes": "256x256", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,6 @@
+# Green Gelo Saborizado
+# Todo o site pode ser lido por buscadores e ferramentas de IA.
+User-agent: *
+Allow: /
+
+Sitemap: https://matdev96.github.io/green-gelo-site/sitemap.xml

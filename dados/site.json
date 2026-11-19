@@ -1,0 +1,24 @@
+{
+  "url": "https://matdev96.github.io/green-gelo-site/",
+  "nome": "Green Gelo Saborizado",
+  "razaoSocial": "Green Gelo Saborizado LTDA",
+  "cnpj": "34.041.212/0001-39",
+  "titulo": "Gelo Saborizado para Drinks | Revenda e Atacado | Green Gelo",
+  "descricao": "Gelo saborizado para drinks direto da fábrica em São Paulo: 9 sabores, já vem congelado e reposição rápida. Atendemos todo o Brasil. Seja revendedor Green.",
+  "tituloCompartilhar": "Green Gelo Saborizado | Gelo para drink para revendedores",
+  "descricaoCompartilhar": "9 sabores de gelo saborizado, direto da fábrica em São Paulo. Já vem congelado e com reposição rápida. Seja um revendedor Green.",
+  "imagemCompartilhar": "assets/img/og-green.jpg",
+  "logo": "assets/img/logo-green.png",
+  "fundacao": "2019",
+  "whatsapp": "5511994814543",
+  "telefone": "+55 11 99481-4543",
+  "instagram": "https://www.instagram.com/greengelo_br/",
+  "endereco": {
+    "rua": "Rua Luis Henrique Pompeu de Camargo, 24",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "04815-350",
+    "pais": "BR"
+  },
+  "embalagem": "190 g (200 ml)"
+}
